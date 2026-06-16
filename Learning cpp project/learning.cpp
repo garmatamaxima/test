@@ -16,6 +16,17 @@
 */
 
 
+
+// attempting to initalise a float when integer was specified using list initalisation, forces compiler error
+void exampleBUG_narrowing_conversion() {
+
+    int bug_value{ 1.1 };
+
+}
+
+
+
+
 void tutorial_asignment_and_initalisation() {
 
     // ---- DIRECT LIST INITALISATION, or just LIST INITALISATION: ----
@@ -61,6 +72,19 @@ void tutorial_asignment_and_initalisation() {
     // this is assignment of a variable named "first", assignment is done to existing variable only
     // (Plain english) -- variable "first" is equal to 3
     first = 3;
+
+    // ---- IMPORTANT TO KNOW!!!: ----
+    
+    /* (Narrowing conversions) --
+
+    * Initializing an int with fractional value 4.5 requires the compiler to convert 4.5 to a value an int can hold
+    * such a conversion is a narrowing conversion, since the fractional part of the value will be lost, compiler will gladly convert 4.5 to 4.
+    * LIST INITALISATION will throw an compile error, because it does not allow it.
+
+    */
+
+
+
 
     std::cout << first << "\n";
 

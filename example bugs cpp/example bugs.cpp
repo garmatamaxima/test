@@ -1,16 +1,46 @@
 
+#include <iostream>
+
+
+// ---- COMPILER BUGS: ----
+
+// its not allowed to define function inside function.
+void bug_recursive_function_definition()
+{
+    int function2() { return 0; }
+}
+
+// ---- RUNTIME BUGS: ----
+
 /*
-=============================
-breaking code since 2026 
-drop code snippets from this file into your program to kill it brutally or make compiler cry like a bitch
-=============================
+2026.06.20
+learncpp chapter 1.5
+Inputting different data type into cin will result in function locking its buffer to 0 and failing extraction
 */
+void BUG_cin_buffer() {
 
+    int value{};
+    
+    // inputting char value into the function will break it
+    std::cin >> value;
 
+}
 
 
 
 // ---- INITALISATION ERRORS: ----
+
+
+/*
+Redefinition
+*/
+void BUG_redefinition() {
+
+    int x{}
+    int x{}
+}
+
+
 
 /*
 2026.06.19

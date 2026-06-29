@@ -392,7 +392,7 @@ void program1()
 // ---- CHAPTER 2 LEARNCPP.COM ----
 
 
-// --- FUNCTIONS: ----
+// ==== FUNCTIONS: ====
     
 //  The function initiating the function call is the "caller" and the function being executed is "callee". 
 //  A function call is also sometimes called an invocation, with the caller invoking the callee.
@@ -405,6 +405,15 @@ void program1()
 //     }
 
 //  !!! In C++ Nested functions are not supported
+
+//  ---- DEFINITION AND DECLARATION OF FUNCTIONS: ----
+
+int foo() // <-- THIS IS function declaration, known as function header. !!! Tells the compiler the function’s name, return type, and parameters.
+{
+    // This is function definition, known as function body. !!! contains the actual code
+    return 0;
+}
+
 
 //  ---- VALUE RETURNING FUNCTIONS: ----
 
@@ -423,10 +432,71 @@ float valueReturningFunction(float first_input, float second_input, float third_
 //  C++ defines meaning of 3 status (exit codes): 0, "EXIT_SUCESS" and "EXIT_FAILURE"
 //  The status code is passed back to the OS, which in turn will pass that code to whichewher program started the program returning the status code. 
 
+//  ---- VOID FUNCTIONS: ----
+
+//  Void functions dont return values to the caller, but do execute statements in the body of a function. 
+//  Also void returning functions are called "non-value returning function"
+
+//  putting return statement at the end of a void statement is useful to exit execution earlier. 
+
+/*
+    Using return statement to exit 3 state condition earlier if x is larger than 10, also an example of good practice as it avoids redundant return and if statements.
+    !!! returning a value using void function is forbidden. Return only can be a breaking the function statement.
+*/
+void voidReturnDemo()
+{
+    std::cout << "enter a value: ";
+    int x{};
+    std::cin >> x;
+
+    if (x > 10) {
+
+        std::cout << x << " Is larger than 10\n";
+        return;
+    }
+    else if (x < 10) {
+
+        std::cout << x << " Is Less than 10\n";
+    }
+    else {
+
+        std::cout << x << " Is 10!\n";
+    }
+}
+
+//  ---- ARGUMENTS AND PARAMETERS: ----
+
+//  A function parameter is a variable used in the header of a function. They define what kind of data will be passed to function to work with, all parameters must have
+//  a data type. 
+
+/* 
+    !!! when a function is called, all of parameters defined in it are created as variables and initalised with arguments using copy initalisation.
+    This process is called "pass by value", function parameters that utilize pass by value are called value parameters.
+    any valid expression can be passed to parameter.
+    The number of arguments must match the number of function parameters
+*/
+
+//  For example, when function is called with arguments Xoo and Yoo, function's parameter x is created and initialized with the value of Xoo
+//  and parameter y is created and initialized with the value of Yoo.
+//  An example call --> parameterDemoFunction(Xoo,Yoo);
+int parameterDemoFunction(int x, int y)
+{
+    return x + y;
+}
 
 int main() {
-    std::cout << valueReturningFunction(10, 5, 5) << '\n';
-    program1();
+    
+    int mainloop_iteration{ 1 };
+
+    std::cout << parameterDemoFunction(1, 1, -7) << '\n';
+
+    while (mainloop_iteration <= 10) {
+
+        voidReturnDemo();
+
+        std::cout << "\nMainloop iteration: " << mainloop_iteration << " out of 10." << "\n\n";
+        mainloop_iteration += 1;
+    }
 
     return 0;
 }

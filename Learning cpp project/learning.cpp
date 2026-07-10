@@ -458,8 +458,18 @@ int exampleSeparation2()
 //  exampleSeparation2() and exampleSeparation1() both have identifiers x in their local scope, but they point to different variables with different values
 //  that exist within those functions.
 
+//  **good practice**: defining local variables close to their use.
 
+//  ---- TEMPORARY OBJECT: ----
 
+//  temporary objects are created by a compiler automatically when they are needed. They are unnamed objects with no identifier(name).
+
+void temporaryObjectDemo()
+{
+   std::cout << 15 - exampleSeparation1(); // when exampleSeparation1() function ends, it returns its value to the temporary object that compiler creates.
+}
+// So, return by value returns a temporary object (that holds a copy of the return value) to the caller.
+// temporary objects have no scope (scope is tied to identifier) and are destroyed at the end of a full expression they were created in.
 int main()
 {
   int mainloop_iteration{1};

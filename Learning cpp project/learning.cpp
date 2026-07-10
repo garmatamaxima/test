@@ -1,163 +1,68 @@
 
-//ISO C++20 standart
+//C++20
 
-
-//To use the functionality defined within the iostream library, we need to include the iostream header at the top of any code file 
+//To use the functionality defined within the iostream library, we need to include the iostream header at the top of any code file
 // that uses the content defined in iostream
 // This is preprocessor directive
+
+#include <cstdio>
 #include <iostream>
+#include <string>
 
 
 /// -------------------- CHAPTER 1 LEARNCPP.COM -------------------- ///
 
 /*
-    QUICK FACTS::
-    
     // ---- CHAR: ----
-    Character data types are: single digit -> 'A' taking 1 byte and string "I am a string, hi" taking more than 1 byte 
+    Character data types are: single digit -> 'A' taking 1 byte and string "I am a string, hi" taking more than 1 byte
     Values that are placed directly into the source code are called literals
     !!! Leading whitespace characters are spaces, tabs, and newlines.
-    
+
     // ---- OBJECTS: ----
-    In C++, we use objects to access memory. A named object is called a variable. Each variable has an identifier (a name), a type, 
+    In C++, we use objects to access memory. A named object is called a variable. Each variable has an identifier (a name), a type,
      and a value
     A variable’s type is used to determine how the value in memory should be interpreted.
-    
+
     // ---- INSTANTIATION: ----
-    The term instantiation is a fancy word that means a variable has been created (allocated) 
+    The term instantiation is a fancy word that means a variable has been created (allocated)
     and initialized (this includes default initialization)
     !!! declaration introduces a variable name to the computer program and assigns it to a datatype.
 
+    // ---- DECLARATION: ----
+
+    // ---- DEFINITION: ----
+
+    // ---- SIDE EFFECTS: ---- #TODO -> side effects of expressions and not only them.
+
+    // ---- UNDEFINED BEHAVIOUR: ----
+
 */
-void keywords() {
-    /*
-        alignas
-        alignof
-        and
-        and_eq
-        asm
-        auto
-        bitand
-        bitor
-        bool
-        break
-        case
-        catch
-        char
-        char8_t(since C++20)
-        char16_t
-        char32_t
-        class
-        compl
-        concept (since C++20)
-    */
-    /*
-        const
-        consteval (since C++20)
-        constexpr
-        constinit (since C++20)
-        const_cast
-        continue
-        co_await (since C++20)
-        co_return (since C++20)
-        co_yield (since C++20)
-        decltype
-        default
-        delete
-        do
-        double
-        dynamic_cast
-        else
-        enum
-        explicit
-        export
-    */
-    /*
-        extern
-        false
-        float
-        for
-        friend
-        goto
-        if
-        inline
-        int
-        long
-        mutable
-        namespace
-        new
-        noexcept
-        not
-        not_eq
-        nullptr
-        operator
-        or
-    */
-    /*
-        or_eq 
-        private
-        protected
-        public
-        register
-        reinterpret_cast
-        requires (since C++20)
-        return
-        short
-        signed
-        sizeof
-        static
-        static_assert
-        static_cast
-        struct
-        switch
-        template
-        this
-        thread_local
-    */
-    /*
-        throw
-        true
-        try
-        typedef
-        typeid
-        typename
-        union
-        unsigned
-        using
-        virtual
-        void
-        volatile
-        wchar_t
-        while
-        xor
-        xor_eq
-    */
+
+using std::string;
+
+void statements() {
+  // TODO
 }
 
-void statements()
-{
-// TODO 
-}
-
-void asignment_and_initalisation() 
+void asignment_and_initalisation()
 {
     std::cout << "/ This is Assignment and Initalisation outputs: \n";
 
     // ---- DIRECT LIST INITALISATION, or just LIST INITALISATION: ----
 
-    /* 
-    this is definition and initalisation of a variable, ( is it declaration?? who knows... )
+    /*
+    this is definition, declaration and initalisation of a variable,
     "=" is an assignment operator
     "{}" is an initializer (The process of specifying an initial value for an object)
-    */ 
-    
+    */
+
     // (Plain english) -- define a variable named "first" of type integer then initalise it with initial value 1.
     int first {1};
 
     std::cout << "list init >>" << first << "\n";
 
     // ---- ZERO INITALISATION, VALUE INITALISATION: ----
-    
+
     int width{}; // will implicitly initialize the variable to zero
 
     std::cout << "zero init >> " << width << "\n";
@@ -173,7 +78,7 @@ void asignment_and_initalisation()
     std::cout << "copy list init >> " << alpha << "\n";
 
     // ---- COPY INITALISATION: ----
-    
+
     // different syntax for initalising a variable
     // (Plain english) -- define a variable named "second" of type integer then initalise it with initial value of 1
     int second = 1;
@@ -197,7 +102,7 @@ void asignment_and_initalisation()
     std::cout << "Assignment of variable to different value >> " << first << "\n";
 
     // ---- IMPORTANT TO KNOW!!!: ----
-    
+
     /* (Narrowing conversions) --
 
     * Initializing an int with fractional value 4.5 requires the compiler to convert 4.5 to a value an int can hold
@@ -208,7 +113,7 @@ void asignment_and_initalisation()
     */
 }
 
-void may_be_unused() 
+void may_be_unused()
 {
     // ---- MAY BE UNUSED: ----
 
@@ -220,18 +125,18 @@ void may_be_unused()
     [[maybe_unused]] double pi{ 3.14159 };
     [[maybe_unused]] double randomsomething{ 2323.54359 };
     [[maybe_unused]] int one{ 1 }, two{ 2 }, three{ 3 };
-    
+
     // legal but bad practice
     int i_am_useless{ 1 };
 
 }
 
-void iostream() 
+void iostream()
 {
     float a_variable {123};
     float your_age{};
     float age_left{};
-    int x{}; 
+    int x{};
     int y{}; // define variable y to hold user input (and value-initialize it)
 
 
@@ -251,7 +156,7 @@ void iostream()
     std::cout << "first part -"
         " and a second part! \n";
 
-    
+
     // ---- CIN, CHARACTER IN: ----
     /*
     ">>" EXTRACTION OPERATOR: allows to put the input data from keyboard into console INTO a variable (which can be used in subsequent
@@ -259,19 +164,19 @@ void iostream()
     !!! cin works like a conveyor belt, it takes inputs be it single extraction operator ">>" or n (multiple) of them, then it reads the
      first value and puts it in a buffer, then processes, then allocates into a variable. extraction stops at a leading whitespace number
      like space, tab and "\n" (newline) . chaining extraction operators allows to input multiple values, that cin reads through them
-    
+
     IOSTREAM library expects Enter key input to send data to cin.
     !!! Enter key sends '\n' special character into cin buffer
 
     !!! WHEN EXTRACTION FAILS CIN DOES NOT FLUSH ITS BUFFER and always outputs 0
     */
     std::cin >> your_age;
-    
+
     std::cout << your_age << "\n";
 
     /*
-    In this example CIN attempts to extract multiple variables from inputs, How it works? 
-    CIN reads first value digit by digit, when it encounters a white line character like Space or Tab it starts 
+    In this example CIN attempts to extract multiple variables from inputs, How it works?
+    CIN reads first value digit by digit, when it encounters a white line character like Space or Tab it starts
      extracting to the next variable. When any non integer is encountered extraction is failed, next variables will be set to 0.
     */
     int u{}, i{}, o{};
@@ -302,19 +207,19 @@ void literals()
 void operators()
 {
 //  Operator is a process involving zero or more input values called "operands" that produces a new value called "output value"
-//  the specific operation to be performed is denoted by a symbol called operator, the output value 
+//  the specific operation to be performed is denoted by a symbol called operator, the output value
 //  of an operation is often called "return value"
 //  Math (arithmetic) operators are executed in order called PEMDAS.
 
     /*
      ARITHMETIC OPERATORS:   addition +, substraction -, multiplication *, division /, modulo, reminder % (integer reminders only)
-     TYPES OF OPERATORS: 
+     TYPES OF OPERATORS:
      Unary - acts on one operand, -x is an unary operand.
      Binary - act on two operands, left and right value. x + y is an binary operand.
      Ternary - same logic, acts on three operands.
-     Nullary - operand acts on zero operands 
+     Nullary - operand acts on zero operands
     */
-   
+
     /*
     Side effects: Most operators produce side effects, x=5 has the side effect of assigning value 5 to variable x.
      The change in variable is observable even when operator ended its execution.
@@ -335,33 +240,33 @@ void expressions()
 //  !!! The last value after executing an evaluation is result.
 
     int a{ (2 * 3) + 5 };
-    
 
-//  Expressions do not end in semicolon, so compiler wont compile them. 
+
+//  Expressions do not end in semicolon, so compiler wont compile them.
 //  Exressions are always evaluated as part of statements!
-    
+
 //  WRONG: compiler wont compile
-//  2 + 5 
-    
+//  2 + 5
+
 //  RIGHT: EXPRESSION STATEMENT
     int x = {};
     x = 12 + 12; // evaluates to x.
 
     /*
-    
+
     2 //          2 is a literal that evaluates to value 2
     a = 5 //      operator+ uses operands a and 5. a evaluates to value 5.
     "hi" //       is a literal that evaluates to "hi"
-    literals() // evaluates to return value of a function 
+    literals() // evaluates to return value of a function
     x = 5; // x=5 has side effect of assigning 5 to x, evaluates to x
     x = 2 + 3; // has side effect of assigning 5 to x, evaluates to x.
-    
+
     */
 
 //  SYNTAX MEANING:
     int y{ 3 + 2 }; // type identifier { expression }
 
-//  SUBEXRPRESSIONs are expressions used as an operands, for example subexressions of x = 4 + 5 are x and 4+5. 
+//  SUBEXRPRESSIONs are expressions used as an operands, for example subexressions of x = 4 + 5 are x and 4+5.
 //  FULL EXRPESSIONs are expressions that are not subexpressions, 2, 2+3, x=2+3 are full expressions. They can contain zero to more
 //  subexpressions.
 //  COMPOUND EXPRESSIONs are expressions that contain 2 or more operators, x = 4 + 5 is a compound expression (uses + and = operators)
@@ -381,7 +286,7 @@ void program1()
 
     std::cout << "Enter an integer: ";
     std::cin >> user_input1;
-    
+
     std::cout << "Enter another integer: ";
     std::cin >> user_input2;
 
@@ -393,8 +298,8 @@ void program1()
 
 
 // ==== FUNCTIONS: ====
-    
-//  The function initiating the function call is the "caller" and the function being executed is "callee". 
+
+//  The function initiating the function call is the "caller" and the function being executed is "callee".
 //  A function call is also sometimes called an invocation, with the caller invoking the callee.
 
 //  USER DEFINED FUNCTIONs:
@@ -427,17 +332,17 @@ float valueReturningFunction(float first_input, float second_input, float third_
 //  Value returning functions return one value only.
 //  !!! A value returing function will produce undefined behaviour if it has no return statement (modern compilers sometimes dont catch the problem).
 
-//  !!! main() function will return 0 if no return statements are provided. 
+//  !!! main() function will return 0 if no return statements are provided.
 //  main() always has to return a value, 0 is sucessful termination of a program while non 0 values are exit failures.
 //  C++ defines meaning of 3 status (exit codes): 0, "EXIT_SUCESS" and "EXIT_FAILURE"
-//  The status code is passed back to the OS, which in turn will pass that code to whichewher program started the program returning the status code. 
+//  The status code is passed back to the OS, which in turn will pass that code to whichewher program started the program returning the status code.
 
 //  ---- VOID FUNCTIONS: ----
 
-//  Void functions dont return values to the caller, but do execute statements in the body of a function. 
+//  Void functions dont return values to the caller, but do execute statements in the body of a function.
 //  Also void returning functions are called "non-value returning function"
 
-//  putting return statement at the end of a void statement is useful to exit execution earlier. 
+//  putting return statement at the end of a void statement is useful to exit execution earlier.
 
 /*
     Using return statement to exit 3 state condition earlier if x is larger than 10, also an example of good practice as it avoids redundant return and if statements.
@@ -467,9 +372,9 @@ void voidReturnDemo()
 //  ---- ARGUMENTS AND PARAMETERS: ----
 
 //  A function parameter is a variable used in the header of a function. They define what kind of data will be passed to function to work with, all parameters must have
-//  a data type. 
+//  a data type.
 
-/* 
+/*
     !!! when a function is called, all of parameters defined in it are created as variables and initalised with arguments using copy initalisation.
     This process is called "pass by value", function parameters that utilize pass by value are called value parameters.
     any valid expression can be passed to parameter.
@@ -479,25 +384,94 @@ void voidReturnDemo()
 //  For example, when function is called with arguments Xoo and Yoo, function's parameter x is created and initialized with the value of Xoo
 //  and parameter y is created and initialized with the value of Yoo.
 //  An example call --> parameterDemoFunction(Xoo,Yoo);
+
 int parameterDemoFunction(int x, int y)
 {
     return x + y;
 }
 
-int main() {
-    
-    int mainloop_iteration{ 1 };
+//  ---- LOCAL VARIABLE LIFETIMES: ----
 
-    std::cout << parameterDemoFunction(1, 1, -7) << '\n';
+/*
+    Variables defined inside a body of a function are called **Local variables**, function parameters are also considered to be local variables.
+    When a function is called its parameters are created and initalised, and variables within the function body are created and initialized at the point of definition.
+    Local variables are destroyed in the opposite order of creation at the end of the set of curly braces in which it is defined.
+*/
+int exampleLifetime(int A, int B) // parameters A and B take the argument values from the caller function, are created and initalised as local variables inside the function.
+{
+    int o{0}; // o is created and initalised as local variable
+    return o + A + B;
 
-    while (mainloop_iteration <= 10) {
+} // o, A, B variables created inside this function are destroyed, their lifetime ends here.
 
-        voidReturnDemo();
+//   !!! variable creation and destruction happen when the program is at runtime, not at compile time. **Lifetime is a runtime property**.
+//   Any use of an object after it was destroyed will result in undefined behaviour.
+//   at some time after destruction of an object, the memory will be "deallocated" (freed for reuse in RAM).
 
-        std::cout << "\nMainloop iteration: " << mainloop_iteration << " out of 10." << "\n\n";
-        mainloop_iteration += 1;
-    }
+//  ---- LOCAL SCOPE, BLOCK SCOPE: ----
+
+//   Identifiers scope determines whether it can be seen and used within the source code. If identifier can be seen and used, it is considered **in scope**.
+//   When an identifier can not be seen, we can not use it, and we say it is **out of scope**.
+//   if there is variables x and y defined inside main(), they can be seen and used within main(), not outside it (thats why we pass arguments to other functions).
+
+//   Scope is a compile-time property, and trying to use an identifier when it is not in scope will result in a compile error.
+
+//  Local scope is technically called block scope.
+//  !!! The identifier of a local variable has local scope. Local variables defined in one function are also not in scope in other functions that are called.
+
+//  An identifier with local scope is usable from the point of definition to the end of the innermost curly brace containing the identifier (for function parameters, at the end of
+//  a function). This ensures local variables cannot be used before the point of definition (even if the compiler opts to create them before then), or after they are destroyed
+
+int blockScopeDemo(int A)
+
+{
+    // variable Goo is out of scope and cant be used. identifier "Goo" is unknown to compiler
+
+    int Goo{10}; // Goo is created and initalised. it now exists within local scope of this function
+
+    return Goo + A;
+
+} // Goo and A become **out of scope** here and cant be used. the term for that is **going out of scope**
+
+void something()
+{
+    // variable Goo is out of scope here.
+}
+
+//  ---- FUNCTIONAL SEPARATION: ----
+
+//  Identifiers x can be declared in two different functions, due to local scope they will not interfere with eachother, this is called **Functional separation**. Important to know
+//  that they will point to separate variables.
+
+int exampleSeparation1()
+{
+    int x{5};
+    return x;
+}
+
+int exampleSeparation2()
+{
+    int x{10};
+    return x;
+}
+
+//  exampleSeparation2() and exampleSeparation1() both have identifiers x in their local scope, but they point to different variables with different values
+//  that exist within those functions.
+
+
+
+int main()
+{
+  int mainloop_iteration{1};
+
+  while (mainloop_iteration <= 10) {
+
+    voidReturnDemo();
+
+    std::cout << "\nMainloop iteration: " << mainloop_iteration << " out of 10."
+              << "\n\n";
+    mainloop_iteration += 1;
+  }
 
     return 0;
 }
-

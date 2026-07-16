@@ -1,10 +1,20 @@
 
 #include <iostream>
 
-int helloFunction(); // Function prototype
+// Function prototypes
+int helloFunction();
+int getInteger();
+//
 
-main()
+int main()
 {
    std::cout << "I am using a function that exist inside other file: " << helloFunction();
-   return 0;
+
+   int x{ getInteger() };
+	int y{ getInteger() };
+
+	std::cout << x << " + " << y << " is " << x + y << '\n';
+	std::cin >> x;
+
+	return 0;
 }

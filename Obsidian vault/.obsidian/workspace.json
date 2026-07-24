@@ -11,17 +11,44 @@
             "id": "4f83995041e27b2f",
             "type": "leaf",
             "state": {
+              "type": "pdf",
+              "state": {
+                "file": "дурня/організована дурня/trig_cheat_sheet.pdf"
+              },
+              "icon": "lucide-file-text",
+              "title": "trig_cheat_sheet"
+            }
+          },
+          {
+            "id": "9276dc67524f2db8",
+            "type": "leaf",
+            "state": {
               "type": "markdown",
               "state": {
-                "file": "C++ ВИВЧЕННЯ/Learning.md",
+                "file": "МАТЕМАТИКА/вектори.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "вектори"
+            }
+          },
+          {
+            "id": "6c57cdcfb48d9226",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "МАТЕМАТИКА/вектори.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Learning"
+              "title": "вектори"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -53,7 +80,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#mcl/list-grid",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -78,7 +105,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 254.5
   },
   "right": {
     "id": "f84e54619da36707",
@@ -196,27 +223,45 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "4f83995041e27b2f",
+  "active": "6c57cdcfb48d9226",
   "lastOpenFiles": [
-    "Excalidraw/scope_namespace.md",
-    "C++ ВИВЧЕННЯ/Learning.md",
-    "Excalidraw/definitionAnddeclaration.md",
+    "розробка - модель.md",
+    "Drawing 2026-07-24 02.45.06.excalidraw.md",
+    "МАТЕМАТИКА/вектори.md",
+    "МАТЕМАТИКА/Excalidraw-math/vector_representation.md",
+    "SUBmarin.md",
+    "uh1.md",
+    "Pasted Image 20260724030454_563.png",
+    "fignya.md",
+    "Pasted Image 20260724024530_336.png",
+    "МАТЕМАТИКА/Excalidraw-math/vector_.md",
+    "дурня/ідеї проєктів/backend та frontend на C++ та js.md",
+    "Без назви.md",
+    "дурня/ідеї проєктів/тетріс на с++.md",
+    "дурня/ідеї проєктів/генератор персональних данних та база данних + gui, додаток на c++.md",
+    "дурня/організована дурня/Шістнадцяткова система числення (hexadecimal).md",
+    "дурня/організована дурня/C++.md",
+    "дурня/організована дурня/C++ ENG.md",
+    "дурня/організована дурня/ch2.md",
+    "дурня/організована дурня/ch1.md",
     "дурня/Windows Desktop PRO.md",
-    "Вступ.md",
-    "C++ ВИВЧЕННЯ/КОД НА ОГЛЯД.md",
-    "ідеї проєктів/генератор персональних данних та база данних + gui, додаток на c++.md",
-    "ідеї проєктів/тетріс на с++.md",
-    "ідеї проєктів/backend та frontend на C++ та js.md",
-    "Excalidraw",
-    "дурня/Execution explanation.md",
-    "дурня/C++ ENG.md",
-    "дурня/ch1.md",
-    "дурня/ch2.md",
     "дурня/komorebic тайлінг менеджер.md",
+    "дурня/Термінал софт.md",
+    "дурня/нотатка.md",
+    "дурня/організована дурня/Pasted image 20260723231801.png",
+    "дурня/організована дурня/symbols.pdf",
+    "дурня/організована дурня/trig_cheat_sheet.pdf",
+    "МАТЕМАТИКА/Excalidraw-math/Drawing 2026-07-24 02.35.35.excalidraw.md",
+    "МАТЕМАТИКА",
+    "C++ ВИВЧЕННЯ/Learning.md",
+    "Excalidraw-stuff/unit circle.md",
+    "C++ ВИВЧЕННЯ/Excalidraw-cpp/scope_namespace.md",
+    "learning.cpp",
     "дурня/Без назви.base",
-    "Без назви 1.base",
-    "data type.md",
-    "дурня/C++.md",
-    "дурня/Шістнадцяткова система числення (hexadecimal).md"
+    "МАТЕМАТИКА/Excalidraw-math",
+    "дурня/організована дурня",
+    "Pasted Image 20260721174852_696.png",
+    "C++ ВИВЧЕННЯ/Excalidraw-cpp",
+    "Без назви 1.base"
   ]
 }

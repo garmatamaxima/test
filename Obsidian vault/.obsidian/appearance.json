@@ -4,7 +4,8 @@
   "baseFontSize": 17,
   "enabledCssSnippets": [
     "primary-bold-white",
-    "primary-bold-white_MY",
     "github-dark-custom"
-  ]
+  ],
+  "showViewHeader": true,
+  "showRibbon": true
 }

@@ -1,4 +1,4 @@
-
+ 
 #TODO Вирізка інформації з learning.cpp - [[ch1]] та [[ch2]]. треба переписати цю інформацію сюди в цей блокнот і вставити в <mark style="background: #BBFABBA6;">CHAPTER 1 та CHAPTER 2</mark>.
 
 #TODO inline functions, inline variables. що це
@@ -209,7 +209,7 @@ this produces an error called **naming collision** or **naming conflict**.  ^33c
 
 <mark style="background: #CACFD9A6;">main.cpp</mark>
 ```cpp
-int myFunc()
+int myFunc() // a working code file 
 {
 	return 0;
 }
@@ -223,7 +223,7 @@ int main()
 
 <mark style="background: #CACFD9A6;">a.cpp</mark>
 ```cpp
-int myFunc()
+int myFunc() // a working code file too, the problem will arise in improper compilation or linking
 {
 	return 0;
 }
@@ -248,7 +248,7 @@ void apples()
 }
 void bananas() 
 {
-	double x{}, y{}, z{};
+	double x{}, y{}, z{}; // no naming collision! they live in different scopes
 }
 ```
 

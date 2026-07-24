@@ -1,15 +1,7 @@
 
-#include <iostream>
+#include "hello.h"         // copies forward declaration from add.h here
 
-int helloFunction()
+double add(int x, int y) // oops, return type is double instead of int
 {
-   return 12345;
-}
-
-int getInteger()
-{
-	std::cout << "Enter an integer: ";
-	int x{};
-	std::cin >> x;
-	return x;
+    return x + y;
 }

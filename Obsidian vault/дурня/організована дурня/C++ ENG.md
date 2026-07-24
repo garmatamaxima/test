@@ -21,7 +21,6 @@ In lesson [1.3 -- Introduction to objects and variables](https://www.learncpp.c
 - [ ] pass by value
  ЦЕЙ TODO НЕ повний
 
-#НАДВАЖЛИВИЙ_TODO - ПРОЧИТАТИ LEARNCPP.COM СТОРІНКУ 2.5 ЗАВТРА!!!!
 
 ---
 ## **VARIABLES**

@@ -31,6 +31,13 @@ declaration introduces a variable name to the computer program and assigns it to
 ##### [[#Compiling it|Compiling a multi file program]]
 ##### [[#^33cf99|Naming collisions]]
 ##### [[#^235c54|Scope resolution operator ::]]
+##### [[#^49acb7|Translation unit]]
+##### [[#^a80905|Including paired header files to source files]]
+##### [[#^861673 | Include directories / where std comes from]]
+
+# **MAKING BUGS AND REGRETTING IT**
+
+##### [[#^83565d|Redefinition of a function]]
 
 # **CHAPTER 1 LEARNCPP.COM **
 
@@ -91,7 +98,7 @@ main() { callerTwo(callerOne);  return 0; }
 
 ---
 ##### A **forward declaration** allows to declare an identifier before defining it.
-To write a forward declaration for a function, we use a **function declaration** statement (also called a **function prototype**).
+To write a forward declaration for a function, we use a **function declaration** statement (also called a **function prototype**). ^b6dea4
 
 ``` cpp
 float Adder(float Abc, float Bca); // function declaration includes: a return type, identifier and parameters (optional).
@@ -141,7 +148,7 @@ Within a _file_, each function, variable, type, or template in a given scope can
 <mark style="background: #ABF7F7A6;">2.</mark>
 Within a _program_, each function or variable in a given scope can only have one definition. This rule exists because programs can have more than one file (we’ll cover this in the next lesson). Functions and variables not visible to the linker are excluded from this rule
 <mark style="background: #ABF7F7A6;">3.</mark>
-Types, templates, inline functions, and inline variables are allowed to have duplicate definitions in different files, so long as each definition is identical. .
+Types, templates, inline functions, and inline variables are allowed to have duplicate definitions in different files, so long as each definition is identical. . ^e89dae
 
 
 ### PROGRAMS WITH MULTIPLE CODE FILES
@@ -308,3 +315,147 @@ int main()
 
 ### PREPROCESSOR
 
+Preprocessor is a part of most compiler languages, each code file goes through the preprocessor first, then compiler.  The stage where preprocessor works is called **Preprocessing phase**, when preprocessor runs it scans through code file searching for **preprocessor directives**. <mark class="hltr-yellow">!</mark> preprocessor does not use C++ syntax  
+
+The final output of the preprocessor contains no directives -- only the output of the processed directive is passed to the compiler. The final output of preprocessor is called **translation unit**
+Preprocessor also removes comments and ends each translation unit in a newline character ^49acb7
+
+##### `#Include`
+is a preprocessor directive used for including header files. Preprocessor then replaces the directive with the contents of a file included. 
+<mark style="background: #FFF3A3A6;">!</mark> Preprocessor can process directives recursively, if included file has directives, it will process them too.
+
+`#include` directive can include: Header files, source code files, std headers.
+
+```cpp
+#include <iostream> // preprocessor will replace this directive with contents of iostream header
+#include "adder.h" // can also include header files
+#include "friend.cpp" // and cpp files
+
+using namespace std
+
+int main() 
+{
+	cout << "im lucky bon bon"
+	return 0;
+}
+```
+
+<mark class="hltr-orange">An important reminder</mark> - preprocessor directly inserts contents of an included files, replacing the `#include` directive. That
+
+##### `#define`
+The `#define` directive can be used to create a macro. In C++, a **macro** is a rule that defines how input text is converted into replacement output text.
+There are two basic types of macros: _object-like macros_, and _function-like macros_.
+
+```cpp
+
+#define MACRO "name" // will replace each MACRO by "name"
+
+```
+##### `#if`
+ #TODO на learn.cpp є матеріал глава 2.10
+##### `#endif`
+#TODO на learn.cpp є матеріал глава 2.10
+
+
+### HEADER FILES
+
+Header files have .h extension, but in some cases they can have .hpp or no file extension at all
+<mark class="hltr-yellow">!</mark> header files are used to add a bunch of related forward declarations into a code file 
+
+what problem do they solve? - manually adding [[#^b6dea4| function prototypes]] into every source code file is tedious, so it was automated using preprocessor and header files. <mark class="hltr-purple">!</mark> They mainly allow to link libraries together.
+
+```cpp
+#include <iostream> //including std header file, no need to add .h extension
+
+#include "adder.h" //including user defined header file
+```
+
+<mark class="hltr-green">Good practice: </mark> - to pair .cpp and .h files together with same name. Source files (.cpp) should `#include` their headers. This allows to pinpoint some redefinition bugs that can appear. ^a80905
+
+---
+**When  `<>` and `""` are used**
+When including headers, headers that are not written inside this program are included using angled brackets (`<>`) while headers that are part of this program and its main folder are included using quotation marks (`""`). 
+
+Angled brackets `<>` specify to preprocessor to search for header files inside **include directories**. The include directories are part of compiler settings, come from directories containing the header files that come with compiler toolchain and/or OS ^861673
+
+![[preprocessor include rules | 500x400]]
+
+---
+##### Redefinition errors when including header files
+
+^83565d
+
+**Defining same function 2 times**
+putting variables and function bodies/definitions into header files can lead to [[#^e89dae| One definition rule violations]]
+
+<mark class="hltr-grey">demo.h</mark>
+```cpp
+int redefinitionDemo(double Xx)
+{
+   return Xx;
+}
+```
+
+<mark class="hltr-grey">main.cpp</mark>
+```cpp
+#include "hello.h"
+#include <iostream>
+
+int redefinitionDemo(double Yy)
+{
+   return Yy;
+}
+
+int main()
+{
+
+   std::cout << redefinitionDemo(5);
+	return 0;
+}
+```
+
+leads to `error: redefinition of 'int redefinitionDemo(double)'` error when compiled using terminal `g++ main.cpp hello.h -o program.exe `
+
+**Another example:**
+
+**Declaring same function with different return types that results in redeclaration error!**
+when add.cpp and add.h are paired, they can help to catch redefinition error
+
+<mark class="hltr-grey">add.h</mark>
+```cpp
+int add(int x, int y);
+```
+
+<mark class="hltr-grey">add.cpp</mark>
+```cpp
+#include "add.h"         // copies forward declaration from add.h here
+
+double add(int x, int y) // oops, return type is double instead of int
+{
+    return x + y;
+}
+```
+
+<mark class="hltr-grey">main.cpp</mark>
+```cpp
+#include "add.h"
+#include <iostream>
+
+int main()
+{
+    std::cout << "The sum of 3 and 4 is " << add(3, 4) << '\n';
+    return 0;
+}
+```
+
+when compiled using g++ in terminal: `g++ main.cpp add.cpp add.h -o program.cpp `  // <mark class="hltr-yellow">reminder:</mark> `.cpp files should be also included with .h files, so linker can reach actual definition`
+
+it will produce an error `error: ambiguating new declaration of 'double add(int, int)'` - compiler computes that function declaration inside .h file and definition inside .cpp file do not match, so it throws an error.
+
+#Note_for_future  this doesn’t work if it is a parameter with a different type instead of a return type. This is because C++ supports overloaded functions (functions with the same name but different parameter types), so the compiler will assume a function with a mismatched parameter type is a different overload.  <mark class="hltr-cyan">source: </mark> [learn.cpp](https://www.learncpp.com/cpp-tutorial/header-files/#:~:text=Unfortunately,all)
+
+##### Source files should not be included
+this can lead to redefinition errors / naming collisions. 
+
+##### Why doesnt Iostream have an .h extension?
+#TODO пройтись по цьому матеріалу [learn.cpp](https://www.learncpp.com/cpp-tutorial/header-files/#:~:text=Why%20doesn%E2%80%99t%20iostream%20have%20a%20%2Eh%20extension) Та також вся 2.11 глава після цього теж

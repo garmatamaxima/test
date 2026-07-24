@@ -93,6 +93,7 @@ ctrl це ^
 }
 
 ###### Стандартні клавіші швидкого доступу Autohotkey
+```
 
 #Requires AutoHotkey v2.0.2
 #SingleInstance Force
@@ -165,3 +166,4 @@ Komorebic(cmd) {
 !+6::Komorebic("move-to-workspace 5")
 !+7::Komorebic("move-to-workspace 6")
 !+8::Komorebic("move-to-workspace 7")`
+```

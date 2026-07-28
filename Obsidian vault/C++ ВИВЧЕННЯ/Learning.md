@@ -3,7 +3,6 @@
 
 #TODO inline functions, inline variables. що це
 
-
 # **INFOCENTER**
 ### *CHAR* 
 Character data types are: single digit -> 'A' taking 1 byte and string "I am a string, hi" taking more than 1 byte
@@ -26,22 +25,42 @@ declaration introduces a variable name to the computer program and assigns it to
 
 # **POINTS OF INTEREST**
 
-##### [[#One definition rule (ODR) |One definition rule (ODR)]]
-##### [[#**Definition** and **Declaration**|Definition and Declaration]]
+CH1
+##### [[#^3aeab3|Compiler warning levels]] - Compiler arguments meant to catch more errors
+
+CH2
+##### [[#One definition rule (ODR) |One definition rule (ODR)]]  - the rule that prevents naming collisions
+##### [[#**Definition** and **Declaration**|Definition and Declaration]] - methods of introducing objects to program
 ##### [[#Compiling it|Compiling a multi file program]]
 ##### [[#^33cf99|Naming collisions]]
 ##### [[#^235c54|Scope resolution operator ::]]
 ##### [[#^49acb7|Translation unit]]
 ##### [[#^a80905|Including paired header files to source files]]
-##### [[#^861673 | Include directories / where std comes from]]
+##### [[#^861673 |Include directories / where std comes from]]
+##### [[#^b8be34|Header guards]] - A technique to prevent ODR violations and copying header includes
+##### [[#^52f271|How to design a program]] 
+
+CH3
+##### [[#^72040d|How to debug using VS Code]] 
+##### [[#^4894b0|The call stack explanation]] 
+
+CH4 
+##### [[#^0c3685|Fundamental data types]]  
+
 
 # **MAKING BUGS AND REGRETTING IT**
 
 ##### [[#^83565d|Redefinition of a function]]
 
-# **CHAPTER 1 LEARNCPP.COM **
+# **CHAPTER 1 **
 
-# **CHAPTER 2 LEARNCPP.COM**
+### COMPILER WARNING LEVELS
+
+^3aeab3
+
+https://www.learncpp.com/cpp-tutorial/configuring-your-compiler-warning-and-error-levels/
+
+# **CHAPTER 2**
 
 ### FORWARD DECLARATION AND DEFINITION
 ##### This program wont compile.
@@ -268,7 +287,7 @@ In c++ any name/identifier that is not defined inside a class, function or a nam
 ![[scope_namespace|620x220]]
 
 <mark style="background: #ABF7F7A6;">1.</mark> identifiers declared inside the global scope are in scope from the poin of declaration to the end of file.
-<mark style="background: #ABF7F7A6;">2.</mark> variables can be defined in global scope, but this is bad practice
+<mark style="background: #ABF7F7A6;">2.</mark> variables can be defined in global scope, but this is <mark class="hltr-red">bad practice</mark>
 
 The `::` symbol is an operator called the **scope resolution operator**, the identifier to the left of the symbol identifies namespace, the symbol to the right of `::` operator is the identifier inside this namespace. 
 When an identifier includes a namespace prefix, the identifier is called a **qualified name**. ^235c54
@@ -315,10 +334,12 @@ int main()
 
 ### PREPROCESSOR
 
-Preprocessor is a part of most compiler languages, each code file goes through the preprocessor first, then compiler.  The stage where preprocessor works is called **Preprocessing phase**, when preprocessor runs it scans through code file searching for **preprocessor directives**. <mark class="hltr-yellow">!</mark> preprocessor does not use C++ syntax  
+each code file goes through the preprocessor first, then compiler.  The stage where preprocessor works is called **Preprocessing phase**, when preprocessor runs it scans through code file searching for **preprocessor directives**. <mark class="hltr-yellow">!</mark> preprocessor does not use C++ syntax  
 
 The final output of the preprocessor contains no directives -- only the output of the processed directive is passed to the compiler. The final output of preprocessor is called **translation unit**
 Preprocessor also removes comments and ends each translation unit in a newline character ^49acb7
+
+All preprocessor directives end on a newline, not a semicolon (the statement).
 
 ##### `#Include`
 is a preprocessor directive used for including header files. Preprocessor then replaces the directive with the contents of a file included. 
@@ -340,11 +361,13 @@ int main()
 }
 ```
 
-<mark class="hltr-orange">An important reminder</mark> - preprocessor directly inserts contents of an included files, replacing the `#include` directive. That
+<mark class="hltr-orange">An important reminder</mark> - preprocessor directly inserts contents of an included files, replacing the `#include` directive.
 
 ##### `#define`
 The `#define` directive can be used to create a macro. In C++, a **macro** is a rule that defines how input text is converted into replacement output text.
 There are two basic types of macros: _object-like macros_, and _function-like macros_.
+
+Macros are useful in a technique called **header guard**, that allows to use `#ifndef` directive to include header contents only once.
 
 ```cpp
 
@@ -356,6 +379,21 @@ There are two basic types of macros: _object-like macros_, and _function-like ma
 ##### `#endif`
 #TODO на learn.cpp є матеріал глава 2.10
 
+##### `#ifndef`
+Is a directive that means "If not defined", it is useful in a technique called **header guard**, to prevent including header files more than once ^b8be34
+
+<mark class="hltr-grey">myHeader.h</mark>
+```cpp
+#ifndef MY_IDENTIFIER // if this preprocessor identifier were not defined, it will execute that preprocessor command
+#define MY_IDENTIFIER // defines identifier that later will prevent preprocessor logic from uncluding this block untill #endif
+
+int functionA(int,float); // function prototype.
+#endif // ends preprocessor if logical block.
+```
+
+##### `#pragma`
+other version of header guard. я лінийвий щоб писати 😭 #TODO 
+
 
 ### HEADER FILES
 
@@ -365,7 +403,7 @@ Header files have .h extension, but in some cases they can have .hpp or no file 
 what problem do they solve? - manually adding [[#^b6dea4| function prototypes]] into every source code file is tedious, so it was automated using preprocessor and header files. <mark class="hltr-purple">!</mark> They mainly allow to link libraries together.
 
 ```cpp
-#include <iostream> //including std header file, no need to add .h extension
+#include <iostream> //including std header file
 
 #include "adder.h" //including user defined header file
 ```
@@ -459,3 +497,128 @@ this can lead to redefinition errors / naming collisions.
 
 ##### Why doesnt Iostream have an .h extension?
 #TODO пройтись по цьому матеріалу [learn.cpp](https://www.learncpp.com/cpp-tutorial/header-files/#:~:text=Why%20doesn%E2%80%99t%20iostream%20have%20a%20%2Eh%20extension) Та також вся 2.11 глава після цього теж
+
+### **How to design a program**
+
+^52f271
+
+https://www.learncpp.com/cpp-tutorial/how-to-design-your-first-programs/
+
+# **CHAPTER 3**
+
+### **SYNTAX AND SEMANTIC ERRORS**
+
+##### Syntax errors
+Syntax errors occur when statements that are not valid according to grammatic rules of  C++ language, 
+<mark class="hltr-yellow">!</mark> The compiler catches syntax errors and highlights them in console.
+
+```cpp
+#include <iostream>
+
+int main( // missing closing brace
+{
+    int 1x; // variable name can't start with number
+    std::cout << "Hi there"; << x +++ << '\n'; // extraneous semicolon, operator+++ does not exist
+    return 0 // missing semicolon at end of statement
+}
+```
+
+##### Semantic errors
+error in meaning, either violates the rules of the language, or a statement does a wrong action alltogether
+
+```cpp
+int main()
+{
+    5 = x; // x not declared, cannot assign a value to 5
+    return "hello"; // "hello" cannot be converted to an int
+}
+```
+
+these can appear at runtime, which is the worst case of  an semantic error. 
+
+### DEBUG INSIDE SOURCE CODE
+
+##### placing `std::cerr` inside a code file to debug
+
+#TODO 
+##### Debug method: narrowing down the problem using hi-lo method
+
+#TODO 
+##### using `ifdef` to insert debug code
+
+#TODO 
+##### using logging, `std::clog`
+
+#TODO 
+
+### DEBUG USING DEBUGGER
+
+<mark class="hltr-green">USING VS CODE</mark>
+ **step into** command executes the next statement in the normal execution path of the program, and then pauses execution of the program so we can examine the program’s state using the debugger. This debugger tool shows an pointer arrow that marks the next execution step  ^72040d
+
+The **step over** command executes the next statement in the normal execution path of the program. However, whereas _step into_ will enter function calls and execute them line by line, _step over_ will execute an entire function without stopping and return control to you after the function has been executed.
+
+![[Pasted image 20260729000716.png]]
+
+<mark class="hltr-cyan">VS CODE RMB menu commands</mark>
+**Set next statement** - command allows us to change the point of execution to some other statement (sometimes informally called _jumping_). This can be used to jump the point of execution forwards and skip some code that would otherwise execute, or backwards and have something that already executed run again.
+##### The watch window
+
+allows to add variables that will be continuously inspected by a debugger, adding a variable to watch window is done through RMB click menu on a variable in source code file.
+
+![[Pasted image 20260729002838.png]]
+
+<mark class="hltr-pink">source of reference for vscode debugging</mark>  https://code.visualstudio.com/docs/debugtest/debugging
+
+### THE CALL STACK
+
+^4894b0
+
+When a program calls a function, it bookmarks the current location, makes the function call, and then returns. The program uses **call stack** to keep track of called functions in memory.
+
+The **call stack** is a list of all the active functions that have been called to get to the current point of execution. The call stack includes an entry for each function called, as well as which line of code will be returned to when the function returns. Whenever a new function is called, that function is added to the top of the call stack. When the current function returns to the caller, it is removed from the top of the call stack, and control returns to the function just below it.
+
+ <mark class="hltr-yellow">!</mark> stack is a data structure
+
+![[call stack | 500x500]]
+
+### Not making errors while coding
+
+- Follow best practices.
+- Don’t program when tired or frustrated. Take a break and come back later.
+- Understand where the common pitfalls are in a language (all those things we warn you not to do).
+- Don’t let your functions get too long.
+- Prefer using the standard library to writing your own code, when possible.
+- Comment your code liberally.
+- Start with simple solutions, then layer in complexity incrementally.
+- Avoid clever/non-obvious solutions.
+- Optimize for readability and maintainability, not performance.
+
+#TODO занотувати це https://www.learncpp.com/cpp-tutorial/finding-issues-before-they-become-problems/
+
+# **CHAPTER 4**
+
+### Introduction to fundamental data types
+Computers use **RAM** to store data temporarily, a unit of data for a modern computer is **binary digit** (also called a **bit**) which can hold a value 1 or 0, hense the name binary. 
+
+Memory is organized into sequential units called **memory addresses**. Each memory adress holds a **byte**, A **byte** is a group of bits that are operated on as one unit. <mark class="hltr-blue"> The modern standard is that a byte is comprised of 8 sequential bits.</mark>
+
+![[8 bit adresses | 700x200]]
+##### Fundamental data types
+Because all data on a computer is just a sequence of bits, we use a **data type** (often called a **type** for short) to tell the compiler how to interpret the contents of memory in some meaningful way. You have already seen one example of a data type: the integer. When we declare a variable as an integer, we are telling the compiler “the piece of memory that this variable uses is going to be interpreted as an integer value”.
+
+When you give an object a value, the compiler and CPU take care of encoding your value into the appropriate sequence of bits for that data type, which are then stored in memory (remember: memory can only store bits). For example, if you assign an integer object the value `65`, that value is converted to the sequence of bits `0100 0001` and stored in the memory assigned to the object.
+
+**Fundamental data** types or **basic types** table ^0c3685
+
+|                                                                                    |                      |                                                  |         |
+| ---------------------------------------------------------------------------------- | -------------------- | ------------------------------------------------ | ------- |
+| float  <br>double  <br>long double                                                 | Floating Point       | a number with a fractional part                  | 3.14159 |
+| bool                                                                               | Integral (Boolean)   | true or false                                    | true    |
+| char  <br>wchar_t  <br>char8_t (C++20)  <br>char16_t (C++11)  <br>char32_t (C++11) | Integral (Character) | a single character of text                       | ‘c’     |
+| short int  <br>int  <br>long int  <br>long long int (C++11)                        | Integral (Integer)   | positive and negative whole numbers, including 0 | 64      |
+| std::nullptr_t (C++11)                                                             | Null Pointer         | a null pointer                                   | nullptr |
+| void                                                                               | Void                 | no type                                          | n/a     |
+
+##### Integer vs integral types
+

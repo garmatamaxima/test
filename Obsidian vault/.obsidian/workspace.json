@@ -11,18 +11,6 @@
             "id": "4f83995041e27b2f",
             "type": "leaf",
             "state": {
-              "type": "pdf",
-              "state": {
-                "file": "дурня/організована дурня/trig_cheat_sheet.pdf"
-              },
-              "icon": "lucide-file-text",
-              "title": "trig_cheat_sheet"
-            }
-          },
-          {
-            "id": "9276dc67524f2db8",
-            "type": "leaf",
-            "state": {
               "type": "markdown",
               "state": {
                 "file": "C++ ВИВЧЕННЯ/Learning.md",
@@ -32,21 +20,8 @@
               "icon": "lucide-file",
               "title": "Learning"
             }
-          },
-          {
-            "id": "6c57cdcfb48d9226",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "C++ ВИВЧЕННЯ/Excalidraw-cpp/preprocessor include rules.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "preprocessor include rules"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -78,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#TODO",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -205,7 +180,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 244.5
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -220,39 +195,46 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "9276dc67524f2db8",
+  "active": "4f83995041e27b2f",
   "lastOpenFiles": [
-    "МАТЕМАТИКА/вектори.md",
-    "C++ ВИВЧЕННЯ/Excalidraw-cpp/preprocessor include rules.md",
-    "C++ ВИВЧЕННЯ/Learning.md",
-    "дурня/організована дурня/C++ ENG.md",
+    "8 bit adresses.md",
     "дурня/організована дурня/Шістнадцяткова система числення (hexadecimal).md",
-    "дурня/komorebic тайлінг менеджер.md",
-    "C++ ВИВЧЕННЯ/Excalidraw-cpp/scope_namespace.md",
-    "C++ ВИВЧЕННЯ/КОД НА ОГЛЯД.md",
-    "C++ ВИВЧЕННЯ/Excalidraw-cpp/definitionAnddeclaration.md",
-    "().md",
-    "uh1.md",
-    "SUBmarin.md",
+    "C++ ВИВЧЕННЯ/Learning.md",
+    "Pasted image 20260729012105.png",
+    "C++ ВИВЧЕННЯ/Excalidraw-cpp/call stack.md",
+    "Drawing 2026-07-24 02.45.06.excalidraw.md",
+    "Pasted image 20260729002838.png",
+    "дурня/КОД НА ОГЛЯД.md",
+    "C++ ВИВЧЕННЯ/g++.md",
+    "C++ ВИВЧЕННЯ/assets/Pasted image 20260729000716.png",
     "Pasted Image 20260724030454_563.png",
     "Pasted Image 20260724024530_336.png",
-    "fignya.md",
+    "Drawing 2026-07-29 00.07.57.excalidraw.md",
+    "C++ ВИВЧЕННЯ/assets/Pasted image 20260728235136.png",
+    "C++ ВИВЧЕННЯ/assets/Pasted image 20260728235437.png",
+    "Pasted image 20260728235759.png",
+    "C++ ВИВЧЕННЯ/assets",
+    "МАТЕМАТИКА/вектори.md",
+    "дурня/організована дурня/trig_cheat_sheet.pdf",
+    "C++ ВИВЧЕННЯ/Excalidraw-cpp/preprocessor include rules.md",
+    "дурня/Вступ.md",
     "розробка - модель.md",
-    "Drawing 2026-07-24 02.45.06.excalidraw.md",
+    "fignya.md",
+    "uh1.md",
+    "SUBmarin.md",
+    "дурня/організована дурня/C++ ENG.md",
+    "дурня/komorebic тайлінг менеджер.md",
+    "C++ ВИВЧЕННЯ/Excalidraw-cpp/scope_namespace.md",
+    "C++ ВИВЧЕННЯ/Excalidraw-cpp/definitionAnddeclaration.md",
+    "().md",
     "МАТЕМАТИКА/Excalidraw-math/vector_representation.md",
     "МАТЕМАТИКА/Excalidraw-math/vector_.md",
     "дурня/ідеї проєктів/backend та frontend на C++ та js.md",
     "Без назви.md",
     "дурня/ідеї проєктів/тетріс на с++.md",
     "дурня/ідеї проєктів/генератор персональних данних та база данних + gui, додаток на c++.md",
-    "дурня/організована дурня/C++.md",
-    "дурня/організована дурня/ch2.md",
-    "дурня/організована дурня/ch1.md",
-    "дурня/Windows Desktop PRO.md",
-    "дурня/Термінал софт.md",
     "дурня/організована дурня/Pasted image 20260723231801.png",
     "дурня/організована дурня/symbols.pdf",
-    "дурня/організована дурня/trig_cheat_sheet.pdf",
     "МАТЕМАТИКА",
     "learning.cpp",
     "дурня/Без назви.base",

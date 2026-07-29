@@ -3,7 +3,11 @@
 
 #TODO inline functions, inline variables. що це
 
-# **INFOCENTER**
+## Assumptions:
+compiler toolkit - g++, visual studio compiler, visual studio code compiler
+CPU - x64 bit
+
+# **TERMINOLOGIES**
 ### *CHAR* 
 Character data types are: single digit -> 'A' taking 1 byte and string "I am a string, hi" taking more than 1 byte
 Values that are placed directly into the source code are called literals
@@ -37,7 +41,7 @@ CH2
 ##### [[#^49acb7|Translation unit]]
 ##### [[#^a80905|Including paired header files to source files]]
 ##### [[#^861673 |Include directories / where std comes from]]
-##### [[#^b8be34|Header guards]] - A technique to prevent ODR violations and copying header includes
+##### [[#^b8be34|Header guards]] - A technique to prevent ODR violations and repeating header includes
 ##### [[#^52f271|How to design a program]] 
 
 CH3
@@ -45,14 +49,15 @@ CH3
 ##### [[#^4894b0|The call stack explanation]] 
 
 CH4 
-##### [[#^0c3685|Fundamental data types]]  
+##### [[#^cd24be|Integral (integer) data type]],  [[#^63210c|Fundamental data types table]] 
+##### [[#^ce9f81|Fundamental data types size assumptions or standarts]] 
 
 
 # **MAKING BUGS AND REGRETTING IT**
 
 ##### [[#^83565d|Redefinition of a function]]
-
-# **CHAPTER 1 **
+##### [Over-optimisation mistake](https://www.learncpp.com/cpp-tutorial/object-sizes-and-the-sizeof-operator/#:~:text=New,substantive)
+# **CHAPTER 1 ** ...
 
 ### COMPILER WARNING LEVELS
 
@@ -60,7 +65,7 @@ CH4
 
 https://www.learncpp.com/cpp-tutorial/configuring-your-compiler-warning-and-error-levels/
 
-# **CHAPTER 2**
+# **CHAPTER 2** Headers & preprocessor
 
 ### FORWARD DECLARATION AND DEFINITION
 ##### This program wont compile.
@@ -504,7 +509,7 @@ this can lead to redefinition errors / naming collisions.
 
 https://www.learncpp.com/cpp-tutorial/how-to-design-your-first-programs/
 
-# **CHAPTER 3**
+# **CHAPTER 3** Debug
 
 ### **SYNTAX AND SEMANTIC ERRORS**
 
@@ -578,7 +583,7 @@ When a program calls a function, it bookmarks the current location, makes the fu
 
 The **call stack** is a list of all the active functions that have been called to get to the current point of execution. The call stack includes an entry for each function called, as well as which line of code will be returned to when the function returns. Whenever a new function is called, that function is added to the top of the call stack. When the current function returns to the caller, it is removed from the top of the call stack, and control returns to the function just below it.
 
- <mark class="hltr-yellow">!</mark> stack is a data structure
+ <mark class="hltr-yellow">!</mark> ==stack is a data structure==
 
 ![[call stack | 500x500]]
 
@@ -596,12 +601,12 @@ The **call stack** is a list of all the active functions that have been called t
 
 #TODO занотувати це https://www.learncpp.com/cpp-tutorial/finding-issues-before-they-become-problems/
 
-# **CHAPTER 4**
+# **CHAPTER 4** Data types
 
 ### Introduction to fundamental data types
 Computers use **RAM** to store data temporarily, a unit of data for a modern computer is **binary digit** (also called a **bit**) which can hold a value 1 or 0, hense the name binary. 
 
-Memory is organized into sequential units called **memory addresses**. Each memory adress holds a **byte**, A **byte** is a group of bits that are operated on as one unit. <mark class="hltr-blue"> The modern standard is that a byte is comprised of 8 sequential bits.</mark>
+Memory is organized into sequential units called **memory addresses**. Each memory adress holds a **byte**, A **byte** is a group of bits that are operated on as one unit. <mark class="hltr-yellow">!</mark> ==The modern standard is that a byte is comprised of 8 sequential bits.==
 
 ![[8 bit adresses | 700x200]]
 ##### Fundamental data types
@@ -609,7 +614,7 @@ Because all data on a computer is just a sequence of bits, we use a **data type*
 
 When you give an object a value, the compiler and CPU take care of encoding your value into the appropriate sequence of bits for that data type, which are then stored in memory (remember: memory can only store bits). For example, if you assign an integer object the value `65`, that value is converted to the sequence of bits `0100 0001` and stored in the memory assigned to the object.
 
-**Fundamental data** types or **basic types** table ^0c3685
+**Fundamental data** types or **basic types** table  ^63210c
 
 |                                                                                    |                      |                                                  |         |
 | ---------------------------------------------------------------------------------- | -------------------- | ------------------------------------------------ | ------- |
@@ -621,4 +626,153 @@ When you give an object a value, the compiler and CPU take care of encoding your
 | void                                                                               | Void                 | no type                                          | n/a     |
 
 ##### Integer vs integral types
+in math an integer is a number with no fractional part,  NOT `4.5`, `0.0032`. The term “integral” has several different meanings, but in the context of C++ is used to mean “like an integer”. ^cd24be
 
+- The **standard integer types** are `short`, `int`, `long`, `long long` (including their signed and unsigned variants).
+- The **integral types** are `bool`, the various char types, and the standard integer types.
+
+ <mark class="hltr-yellow">!</mark> ==non-fundamental types (such as enum and enum class) are not integral types  ==
+##### Other sets of types
+*Built in types are:* fundamental types and compound data types #link_later
+*external types are:* standart library types
+
+ **strings:** in modern C++, strings are part of the standard library. they will 
+
+##### The `_t` suffix
+Many of the types defined in newer versions of C++ use `_t` suffix, it is a shorthand for type, this is not really consistent huh
+
+### Void type
+void means no type, void is an **incomplete type**. Incomplete types cannot be instantiated for use in variables (that would be pointless), void types are used in other use cases.
+
+##### Void functions
+
+```cpp
+void functionA()
+{
+	// no return statement.
+	// using return statement in void function will result in compiler error.
+}
+```
+
+<mark class="hltr-grey">deprecated:</mark>  the original language C has syntax to indicate that a function does not take any parameters
+```cpp
+void func1(void) // this will compile in c++ too (for backward compatibility reasons)
+{
+	// 
+}
+
+void func2() // this is preffered in c++
+{
+	// 
+}
+```
+
+<mark class="hltr-orange">!</mark> ==Other uses of void== -  The void keyword has a third (more advanced) use in C++ - void pointers. source - [19.5 -- Void pointers](https://www.learncpp.com/cpp-tutorial/void-pointers/).
+
+### Object sizes and the sizeof operator
+most objects in c++ use more than one byte of memory. **The amount of memory object uses depends on its data type**. memory acess in c++ is often done using variable names (and not directly via memory addresses) When a variable is used in source code (.cpp, .h files) the compiler automatically handles how many bytes should be used for that object based on a type of that object.
+
+<mark class="hltr-grey">The more memory an object has, the more data it can hold</mark>
+![[bits exponential growth | 900x200]]
+
+8 bits (one byte) can hold $2^8$ = 256 different values. 
+An object that uses 2 bytes can hold 2^16 (65536) different values.
+So, **objects that utilize more bytes can store a larger number of unique values.**
+
+computers have a finite amount of free memory. Every time we define an object, a small portion of that free memory is used for as long as the object is in existence. Because modern computers have a lot of memory, this impact is usually negligible. However, for programs that need a large amount of objects or data (e.g. a game that is rendering millions of polygons), the difference between using 1 byte and 8 byte objects can be significant.
+
+##### Fundamental data type sizes and assumptions
+
+^ce9f81
+
+<mark class="hltr-cyan">C++ standart:</mark>
+- An object must occupy at least 1 byte (so that each object has a distinct memory address).
+- A byte must be at least 8 bits.
+- The integral types `char`, `short`, `int`, `long`, and `long long` have a minimum size of 8, 16, 16, 32, and 64 bits respectively.
+- `char` and `char8_t` are exactly 1 byte (at least 8 bits).
+
+<mark class="hltr-cyan">Some assumptions have to be made, because computer architectures can differ, most modern computers assume...</mark>
+- A byte is 8 bits.
+- Memory is **byte addressable** (we can access every byte of memory independently).
+- Floating point support is [IEEE-754](https://en.wikipedia.org/wiki/IEEE_754)  compliant.
+- We are on a 32-bit or 64-bit architecture.
+
+|Category|Type|Minimum Size|Typical Size|
+|---|---|---|---|
+|Boolean|bool|1 byte|1 byte|
+|Character|char|1 byte (exactly)|1 byte|
+||wchar_t|1 byte|2 or 4 bytes|
+||char8_t|1 byte|1 byte|
+||char16_t|2 bytes|2 bytes|
+||char32_t|4 bytes|4 bytes|
+|Integral|short|2 bytes|2 bytes|
+||int|2 bytes|4 bytes|
+||long|4 bytes|4 or 8 bytes|
+||long long|8 bytes|8 bytes|
+|Floating point|float|4 bytes|4 bytes|
+||double|8 bytes|8 bytes|
+||long double|8 bytes|8, 12, or 16 bytes|
+|Pointer|std::nullptr_t|4 bytes|4 or 8 bytes|
+
+For maximum portability,  objects shouldnt be assumed to be larger than the specified minimum size.
+
+`static_assert` can be used for compiler to fail a build if it is compiled on an architecture where this assumption is not true. Source -  [9.6 -- Assert and static_assert](https://www.learncpp.com/cpp-tutorial/assert-and-static_assert/#static_assert).
+
+##### **Fundamental data type performance**
+On modern machines, objects of the fundamental data types are fast, so performance while using or copying these types should generally not be a concern.
+
+CPUs are often optimized to process data of a certain size (e.g. 32 bits), and types that match that size may be processed quicker. On such a machine, a 32-bit int could be faster than a 16-bit short or an 8-bit char.
+
+##### The `sizeof()` operator
+In order to determine the size of data types on a particular machine, C++ provides an operator named `sizeof`. The **sizeof operator** is a unary (one variable being operated on) operator that takes either a type or a variable, and returns the size of an object of that type (in bytes).
+
+```cpp
+#include <iostream>
+
+using namespace std // for code visual comfort
+
+int main()
+{
+    cout << "using sizeof operator to get size of int - " << sizeof(int) << '\n';
+    cout << "using sizeof operator to get size of char - " << sizeof(char) << '\n';
+    cout << "using sizeof operator to get size of long - " << sizeof(long) << '\n';
+    cout << "using sizeof operator to get size of float - " << sizeof(float) << '\n';
+	 return 0;
+}
+```
+
+<mark class="hltr-grey">outputs:</mark> 
+```
+using sizeof operator to get size of int - 4
+using sizeof operator to get size of char - 1
+using sizeof operator to get size of long - 4
+using sizeof operator to get size of float - 4
+```
+
+**sizeof also can be used on variable names!**
+
+```cpp
+int main()
+{
+    char A[10]; // defining an array
+    std::cout << "created array named A \n";
+    std::cout << "using sizeof to get size: " << sizeof(A) <<'\n'; //using sizeof on variable.
+
+	 // second example
+    char B[10000];
+    std::cout << "created array named A \n";
+    std::cout << "using sizeof to get size: " << sizeof(B) <<'\n';
+
+	 return 0;
+}
+```
+
+<mark class="hltr-grey">outputs:</mark>
+```
+created array named A 
+using sizeof to get size: 10
+created array named A 
+using sizeof to get size: 10000
+```
+
+### Signed integers

@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <string>
+#include <cmath>
 
 #include <iomanip> // for std::setw (which sets the width of the subsequent output)
 #include <climits> // for CHAR_BIT
@@ -49,12 +50,55 @@ void prog2()
 
 }
 
+void typeTest()
+{
+	int x{2'147'483'647};
+	x += 1;
+
+	int y{0};
+	y = 899999999999;
+}
+
+// returns 1 if overflow
+// Interesting: An algorithm that converts numbers into binary format using modulo operator, if input % 2 = 1, it assigns
+// 1 to that array index, otherwise it assigns zero then divides the number until it reaches zero. 
+short numberToBinary32(long long input)
+{
+	bool binary[32];
+
+	for (int i{0}; i < sizeof(binary) ; i++ )
+	{
+		if (input % 2 == 1)
+		{
+			binary[i] = 1;
+			std::cout << '1';
+			input = (input - 1) / 2;
+		}
+		else
+		{
+			binary[i] = 0;
+			std::cout << '0';
+			input = input / 2;
+		}
+	}
+	
+	if (input != 0) {std::cout << " - overflow." << '\n'; return 1;}
+	std::cout << '\n';
+	return 0;
+}
+
+
+
+
 
 
 int main()
 {
-    prog2();
-	coutStop();
+	for (int i{1}, ovr{0}; ovr != 1 ; i++)
+	{
+		std::cout << "iteration - " << i << '\n';
+		ovr = numberToBinary32(std::pow(2,i));
+	}
 
 	return 0;
 }

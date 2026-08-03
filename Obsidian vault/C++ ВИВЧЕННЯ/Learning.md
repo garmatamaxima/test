@@ -51,12 +51,17 @@ CH3
 CH4 
 ##### [[#^cd24be|Integral (integer) data type]],  [[#^63210c|Fundamental data types table]] 
 ##### [[#^ce9f81|Fundamental data types size assumptions or standarts]] 
-
+##### [[#^0c22ff|signed keyword]],  [[#^ea88aa|signed integer range]]
+##### [[#^40beae | Counting signed integers, why the range is -16  to 15]]
+##### [[#^1191b7|overflow leads to undefined behaviour]
 
 # **MAKING BUGS AND REGRETTING IT**
 
 ##### [[#^83565d|Redefinition of a function]]
 ##### [Over-optimisation mistake](https://www.learncpp.com/cpp-tutorial/object-sizes-and-the-sizeof-operator/#:~:text=New,substantive)
+##### [[#^a0e56c | integer division drops fractional part!!!]]
+
+
 # **CHAPTER 1 ** ...
 
 ### COMPILER WARNING LEVELS
@@ -601,7 +606,7 @@ The **call stack** is a list of all the active functions that have been called t
 
 #TODO занотувати це https://www.learncpp.com/cpp-tutorial/finding-issues-before-they-become-problems/
 
-# **CHAPTER 4** Data types
+# **CHAPTER 4.01** Data types, integers
 
 ### Introduction to fundamental data types
 Computers use **RAM** to store data temporarily, a unit of data for a modern computer is **binary digit** (also called a **bit**) which can hold a value 1 or 0, hense the name binary. 
@@ -776,3 +781,128 @@ using sizeof to get size: 10000
 ```
 
 ### Signed integers
+signed integers are values that can hold both + values and - values, the sign is stored as part of value
+==signed integers give half of their range to negative sign==, the first bit becomes a **sign bit** #fact_check_this
+
+| Type          | minimal size |                                           |
+| ------------- | ------------ | ----------------------------------------- |
+| short int     | 16 bits      |                                           |
+| int           | 16 bits      | Typically 32 bits on modern architectures |
+| long int      | 32 bits      |                                           |
+| long long int | 64 bits      |                                           |
+
+<mark class="hltr-green">good practice</mark> - using `short, long, long long` instead of `short int, long int, long long int` will be preffered, because its more readable and has less chance to introduce a typo. 
+
+A `signed` keyword can be added to indicate that type of this variable will be signed. still, most fundamental types are signed by default. ^0c22ff
+
+#### Signed integer counting starts from zero
+
+^40beae
+
+A 5-bit number can support 2^5 = 32 unique values. For a signed integer, these are split almost evenly amongst positive and negative numbers, with negative receiving an extra value. So the range would be -16 to 15.
+
+==A zero is included in positive part of signed integer==, That makes sense in programming because very often 0 is a first number when counting. 
+so that would be:
+
+
+![[Pasted image 20260803180056.png]]
+
+##### Signed integer ranges
+The range of signed integer is 2^(n-1), where n is amount of digits (each digit is equal to one bit), and substraction is done because one digit is reserved for a sign digit. ^ea88aa
+
+![[signed 1 byte int | 400x300]]
+
+
+| Size / Type   | Range                                                   |
+| ------------- | ------------------------------------------------------- |
+| 8-bit signed  | -128 to 127                                             |
+| 16-bit signed | -32,768 to 32,768                                       |
+| 32-bit signed | -2,147,483,648 to 2,147,483,647                         |
+| 64-bit signed | -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 |
+
+### Unsigned integers
+unsigned integers dont store a sign, so they get full bit range to store value. To define unsigned integer `unsigned` keyword is used:
+```cpp
+unsigned int x{};
+unsigned long long y{};
+```
+
+==By convention `unsigned` keyword is first in a statement, then type keyword.==
+
+| Size/Type       | Range                           |
+| --------------- | ------------------------------- |
+| 8 bit unsigned  | 0 to 255                        |
+| 16 bit unsigned | 0 to 65,535                     |
+| 32 bit unsigned | 0 to 4,294,967,295              |
+| 64 bit unsigned | 0 to 18,446,744,073,709,551,615 |
+
+An n-bit unsigned variable has a range from 0 to (2^n)-1.
+
+
+### Integer Overflow
+if variable gets evaluated outside the range of its type, this will result in undefined behaviour - “If during the evaluation of an expression, the result is not mathematically defined or not in the range of representable values for its type, the behavior is undefined”.
+
+A sign holds + or - side of the value, in case of overflow cpu flips the **sign bit**
+```cpp
+int main()
+{
+    int x{2147483647}; // at the limit of range, 2^31.
+    x = x + 1; // will overflow into sign bit, and will flip to -2147483648
+    x = x - 1; // overflows back into positive values and becomes 2147483647
+    return 0;
+}
+```
+
+==overflow resuts in information being lost==, because 2147483647 + 1 should be 2147483648, not -2147483648. ^1191b7
+
+##### Unsigned integer overflow
+ Any number bigger than the largest number representable by the type wraps around (called **modulo wrapping**), If an unsigned value is out of range, it is divided by largest number of that type, for example `255` for unsigned 1 bit int, and the reminder is then what is output.
+
+<mark class="hltr-cyan">formula:</mark>
+`x % 2^n` is the formula, where x is a value, 2^n is a maximum bit size of this type.
+
+<mark class="hltr-cyan">examples:</mark>
+257 % 2^8 = 257 % 256 = 1 `// modulo operator outputs reminder after division`
+
+```cpp
+int main()
+
+{
+    unsigned short x{65535}, y{65535};
+    x = x+1; // 65535+1 % 65536 = 65536 % 65536 = 0.
+    y = y+15; // 65535 + 15 % 65535 = 65545 % 65536 = 1.
+    return 0;
+
+}
+```
+
+==A very important detail to notice==, binary counting starts from 0, so the actual range will be 65535, not 2^16 = 65535.
+
+![[unsigned integer wraparound | 600x400]]
+
+
+### Integer division
+
+^a0e56c
+
+When doing division with two integers (called **integer division**), C++ always produces an integer result. Since integers can’t hold fractional values, any fractional portion is simply dropped (not rounded!).
+
+```cpp
+int main()
+{
+	int x{20}, y{5}, z{0};
+	z = x / y; // will evaluate to 4, no fractional part (the 0.0)
+	return 0;
+}
+```
+
+```cpp
+int main()
+{
+	int x{8}, y{3}, z{0};
+	z = x / y; // will evaluate to 2, cpu dropped fractional part.  
+	return 0;
+}
+```
+
+**Doing division with integers without loosing fractional part** - [Source material]([Source](https://www.learncpp.com/cpp-tutorial/arithmetic-operators/#:~:text=Using%20static%5Fcast%3C%3E%20to%20do%20floating%20point%20division%20with%20integers))  #TODO

@@ -1,7 +1,4 @@
 [
-  "obsidian-git",
   "highlightr-plugin",
-  "obsidian-excalidraw-plugin",
-  "excalidraw-extras",
-  "mathlive"
+  "obsidian-excalidraw-plugin"
 ]

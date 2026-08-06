@@ -55,11 +55,17 @@ CH4
 ##### [[#^40beae | Counting signed integers, why the range is -16  to 15]]
 ##### [[#^1191b7|overflow leads to undefined behaviour]
 
-# **MAKING BUGS AND REGRETTING IT**
+##### [[#^874074| Converting numbers to scientific notation]]
+
+##### [[#^dc9f62 | floats are implemented using IEEE 754]]
+##### [[#^b2202a| floating point sizes and ranges]]
+##### [[#^6588f9| f suffix in values]] - for example `1.01f`
+# **MISTAKES AND BUGS**
 
 ##### [[#^83565d|Redefinition of a function]]
 ##### [Over-optimisation mistake](https://www.learncpp.com/cpp-tutorial/object-sizes-and-the-sizeof-operator/#:~:text=New,substantive)
-##### [[#^a0e56c | integer division drops fractional part!!!]]
+##### [[#^a0e56c | integer division drops fractional part]]
+##### [[#^48655e| signed and unsigned integer math narrowing conversion to unsigned]]
 
 
 # **CHAPTER 1 ** ...
@@ -795,7 +801,7 @@ signed integers are values that can hold both + values and - values, the sign is
 
 A `signed` keyword can be added to indicate that type of this variable will be signed. still, most fundamental types are signed by default. ^0c22ff
 
-#### Signed integer counting starts from zero
+###### Signed integer counting starts from zero
 
 ^40beae
 
@@ -820,6 +826,22 @@ The range of signed integer is 2^(n-1), where n is amount of digits (each digit 
 | 32-bit signed | -2,147,483,648 to 2,147,483,647                         |
 | 64-bit signed | -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 |
 
+##### signed Integer Overflow
+if variable gets evaluated outside the range of its type, this will result in undefined behaviour - “If during the evaluation of an expression, the result is not mathematically defined or not in the range of representable values for its type, the behavior is undefined”.
+
+A sign holds + or - side of the value, in case of overflow cpu flips the **sign bit**
+```cpp
+int main()
+{
+    int x{2147483647}; // at the limit of range, 2^31.
+    x = x + 1; // will overflow into sign bit, and will flip to -2147483648
+    x = x - 1; // overflows back into positive values and becomes 2147483647
+    return 0;
+}
+```
+
+==overflow resuts in information being lost==, because 2147483647 + 1 should be 2147483648, not -2147483648. ^1191b7
+
 ### Unsigned integers
 unsigned integers dont store a sign, so they get full bit range to store value. To define unsigned integer `unsigned` keyword is used:
 ```cpp
@@ -837,23 +859,6 @@ unsigned long long y{};
 | 64 bit unsigned | 0 to 18,446,744,073,709,551,615 |
 
 An n-bit unsigned variable has a range from 0 to (2^n)-1.
-
-
-### Integer Overflow
-if variable gets evaluated outside the range of its type, this will result in undefined behaviour - “If during the evaluation of an expression, the result is not mathematically defined or not in the range of representable values for its type, the behavior is undefined”.
-
-A sign holds + or - side of the value, in case of overflow cpu flips the **sign bit**
-```cpp
-int main()
-{
-    int x{2147483647}; // at the limit of range, 2^31.
-    x = x + 1; // will overflow into sign bit, and will flip to -2147483648
-    x = x - 1; // overflows back into positive values and becomes 2147483647
-    return 0;
-}
-```
-
-==overflow resuts in information being lost==, because 2147483647 + 1 should be 2147483648, not -2147483648. ^1191b7
 
 ##### Unsigned integer overflow
  Any number bigger than the largest number representable by the type wraps around (called **modulo wrapping**), If an unsigned value is out of range, it is divided by largest number of that type, for example `255` for unsigned 1 bit int, and the reminder is then what is output.
@@ -878,8 +883,49 @@ int main()
 
 ==A very important detail to notice==, binary counting starts from 0, so the actual range will be 65535, not 2^16 = 65535.
 
-![[unsigned integer wraparound | 600x400]]
+![[unsigned integer wraparound | 900x400]]
+##### Doing calculations on unsigned and signed integers
 
+^48655e
+
+Unexpected behaviour can result when doing operations on signed and unsigned integer types. the signed integer will  be converted to an unsigned integer. And the result will be unsigned.
+
+==bug case 1==
+```cpp
+#include <iostream>
+
+int main()
+
+{
+    unsigned int u{ 2 };
+    signed int s{ 3 };
+    
+    std::cout << u - s << '\n'; // 2 - 3 != 4294967295
+    u = u - s; // the wraparound happens with assignment too.
+    return 0;
+
+}
+```
+
+==bug case 2==
+```cpp
+#include <iostream>
+
+int main()
+{
+    signed int s { -1 };
+    unsigned int u { 1 };
+
+    if (s < u) // -1 is implicitly converted to 4294967295, and 4294967295 < 1 is false
+        std::cout << "-1 is less than 1\n";
+    else
+        std::cout << "1 is less than -1\n"; // this statement executes
+
+    return 0;
+}
+```
+
+<mark class="hltr-green">Best practice</mark> is to not use unsigned integers for holding a value, using as function parameter or doing mathematical operations.
 
 ### Integer division
 
@@ -906,3 +952,102 @@ int main()
 ```
 
 **Doing division with integers without loosing fractional part** - [Source material]([Source](https://www.learncpp.com/cpp-tutorial/arithmetic-operators/#:~:text=Using%20static%5Fcast%3C%3E%20to%20do%20floating%20point%20division%20with%20integers))  #TODO
+
+### Fixed size integers
+since `C++11` there are a set of integer types that guarantee fixed size on any architecure they are called **fixed-width integers**.
+The fixed-width integers are defined (in the `<cstdint>`\ header) 
+
+fixed width integers are aliases for fundamental integer types like `short, int, long`, header `<cstdint>` will try to guarantee that `std::int16_t` will become one of types that are 16 bits in size.
+
+![[Pasted image 20260805212929.png]]
+
+```cpp
+#include <iostream>
+#include <cstdint>
+
+int main()
+
+{
+    // Compilers usually guarantee that those types have exact sizes
+    std::cout << sizeof(std::int32_t);
+    std::cout << sizeof(std::int_fast64_t);
+    return 0;
+
+}
+```
+
+#TODO [Source](https://www.learncpp.com/cpp-tutorial/fixed-width-integers-and-size-t/#:~:text=Fast%20and%20least%20integral%20types)
+
+### Scientific notation and Floating point numbers
+
+For scientific notation letter E is used as the "**times ten to the power of**"
+`1.25 * 10^2` = `1.25e2`
+#### How to convert decimal numbers to scientific notation
+
+^874074
+
+- exponent starts at zero.
+- If the number has no explicit decimal point (e.g. `123`), it is implicitly on the right end (e.g. `123.`)
+- Slide the decimal point left or right so there is only one non-zero digit to the left of the decimal.
+    - Each place you slide the decimal point to the left increases the exponent by 1.
+    - Each place you slide the decimal point to the right decreases the exponent by 1.
+- Trim off any leading zeros (on the left end of the significand)
+- Trim off any trailing zeros (on the right end of the significand) (trailing zeros can be significant, depends on use in program)
+
+#### Floating point types/value
+
+**Floating point** data types can hold values that contain numbers with a fractional component. Floating point types are always signed
+
+C++ has three fundamental floating point data types: a single-precision `float`, a double-precision `double`, and an extended-precision `long double`. As with integers, C++ does not define the actual size of these types.
+
+**Floating point size** ^b2202a
+
+| C++ Type    | Typical Size       |
+| ----------- | ------------------ |
+| float       | 4 bytes            |
+| double      | 8 bytes            |
+| long double | 8, 12, or 16 bytes |
+**Floating point range**
+
+|   |   |   |
+|---|---|---|
+|IEEE 754 single-precision (4 bytes)|±1.18 x 10-38 to ±3.4 x 1038 and 0.0|6-9 significant digits, typically 7|
+|IEEE 754 double-precision (8 bytes)|±2.23 x 10-308 to ±1.80 x 10308 and 0.0|15-18 significant digits, typically 16|
+|x87 extended-precision (80 bits)|±3.36 x 10-4932 to ±1.18 x 104932 and 0.0|18-21 significant digits|
+|IEEE 754 quadruple-precision (16 bytes)|±3.36 x 10-4932 to ±1.18 x 104932 and 0.0|33-36 significant digits|
+
+---
+
+floating point types on modern architectures (x64-x86, arm) are implemented following an [IEEE 754 standart]([https://en.wikipedia.org/wiki/IEEE_754](https://en.wikipedia.org/wiki/IEEE_754)) ^dc9f62
+
+When using floating point literals, including one decimal place (even if the decimal is 0) makes the compiler identify the variable type as float. 
+```cpp
+float c { 5.0f }; // 5.0 is a floating point literal, 
+```
+
+`5.0f`  with suffix  `f` means its the float value. ^6588f9
+
+==Best practice== the type of literals  should match the type of the variables they’re being assigned to or used to initialize. Otherwise an unnecessary conversion will result, possibly with a loss of precision.
+
+###### Floating point type behaviour demonstration
+```cpp
+#include <iostream>
+int main()
+
+{
+    std::cout << 5.0 << '\n';
+    std::cout << 6.7f << '\n';
+    std::cout << 9876543.21 << '\n';
+    return 0;
+}
+```
+This program outputs
+```cpp
+5 // std::cout truncates trailing zeros (leftover zeros).
+6.7 
+9.87654e+06 // value was truncated and std::cout prints scientific notation by default.
+```
+
+#### Floating point precision
+The **precision** of a floating point type defines how many significant digits it can represent without information loss.
+

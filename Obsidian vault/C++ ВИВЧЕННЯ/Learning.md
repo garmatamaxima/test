@@ -612,7 +612,7 @@ The **call stack** is a list of all the active functions that have been called t
 
 #TODO занотувати це https://www.learncpp.com/cpp-tutorial/finding-issues-before-they-become-problems/
 
-# **CHAPTER 4.01** Data types, integers
+# **CHAPTER 4 Data types, integers and floats, basic control flow
 
 ### Introduction to fundamental data types
 Computers use **RAM** to store data temporarily, a unit of data for a modern computer is **binary digit** (also called a **bit**) which can hold a value 1 or 0, hense the name binary. 
@@ -1051,3 +1051,78 @@ This program outputs
 #### Floating point precision
 The **precision** of a floating point type defines how many significant digits it can represent without information loss.
 
+#TODO [learncpp.com source material](https://www.learncpp.com/cpp-tutorial/floating-point-numbers/#:~:text=Floating%20point%20precision)
+
+### Boolean types, bool returning operators, if statements
+**boolean data type** holds 2 states - either true or false, 1 or 0. In c++ it takes minimum of one byte (and in most implementations one byte).
+
+```cpp
+#include <iostream>
+int main()
+{
+	bool x{true} // keyword true means 1
+	bool y{false} // keyword false means 0
+	
+	x = 0 // assings false to x
+	y = 1 // assigns true to y
+	
+	if (y) // if is a switch statement that executes if condition is boolean true, if not just skips the code block
+	{
+	// something here
+	}
+	
+	if (5) // integers that are larger than one will convert to true in boolean demanding application
+	{
+		std::cout >> "hello im true \n";
+	}
+	return 0;
+}
+```
+
+#### If chaining, early return
+`if` statements can be chained using `else` statements. 
+
+An **if chain** checks in order (from top to bottom) starting with first `if`, if that condition is not true, CPU continues to the next `else if`  (if it is present) that will run its own condition, else if's can be chained too.  `else`  keyword is used as last element of chain, that will always execute its branch. 
+
+```cpp
+#include <iostream>
+int main()
+{
+	bool x_b{true}, y_b{0}; // declaring 2 bool variables
+	
+	if (x_b)
+	{
+		std::cout << "x_b is true";
+	}
+	else if (y_b && x_b) // !0 = 1, aka not false = true
+	{
+		// this branch wont be triggered as first condition is true, because x_b is a literal that is initalised as true. 
+	}
+	else 
+	{
+	   // some stuff here
+	}
+	
+	return 0;
+}
+```
+
+
+#### Bool returning operators/ Operators that evaluate to bool.
+
+<mark class="hltr-grey">Logical operators </mark>
+Logical AND `&&` - Returns true if both operands are true, otherwise false <mark class="hltr-orange">binary operator</mark>
+Logical OR `||` - Returns true if one of operands is true. When none are true, returns false <mark class="hltr-orange">binary operator</mark>
+Logical NOT `!` - Returns true if operand is false. Reverses the result <mark class="hltr-green">unary operator</mark>
+
+Important property - [Short circuit evaluation of logic operators](https://www.geeksforgeeks.org/linux-unix/short-circuiting-in-c-and-linux/#:~:text=Short%2Dcircuiting%20in%20C%2B%2B%0AIn,value%20of%20the%20right%2Dhand%20side.)
+
+<mark class="hltr-grey">Comparison Operators</mark>
+Equal `==` - Returns true if both operands are equal, otherwise false <mark class="hltr-orange">binary operator</mark>
+NOT equal `!=` - Returns true of both operands are NOT equal, otherwise false <mark class="hltr-orange">binary operator</mark>
+
+Greater than `>` - Returns true if first operand is greater than second, otherwise false <mark class="hltr-orange">binary operator</mark>
+Less than `<` - Returns true if first operand is less than second, otherwise false <mark class="hltr-orange">binary operator</mark>
+
+Greater than or equal to `>=` - Returns true if first operand is greater than second or both are equal <mark class="hltr-orange">binary operator</mark>
+Less than or equal to `<=` - Returns true if first operand is Less than second or both are equal <mark class="hltr-orange">binary operator</mark>

@@ -25,15 +25,18 @@
             "id": "be35e5d48d456b3d",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "C++ ВИВЧЕННЯ/Excalidraw-cpp/unsigned integer wraparound.md"
+                "file": "C++ ВИВЧЕННЯ/Learning.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "excalidraw-icon",
-              "title": "unsigned integer wraparound"
+              "icon": "lucide-file",
+              "title": "Learning"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -92,7 +95,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 253.5
+    "width": 252.5
   },
   "right": {
     "id": "f84e54619da36707",
@@ -199,42 +202,42 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "4f83995041e27b2f",
+  "active": "be35e5d48d456b3d",
   "lastOpenFiles": [
     "C++ ВИВЧЕННЯ/Learning.md",
-    "Pasted image 20260806180924.png",
-    "Pasted image 20260806180902.png",
     "C++ ВИВЧЕННЯ/Excalidraw-cpp/unsigned integer wraparound.md",
-    "Pasted image 20260805212929.png",
     "C++ ВИВЧЕННЯ/g++.md",
+    "C++ ВИВЧЕННЯ/Other C++.md",
+    "Pasted image 20260805212929.png",
+    "Pasted image 20260806180902.png",
+    "Pasted image 20260806180924.png",
+    "Pasted image 20260731104902.png",
+    "Drawing 2026-08-03 18.20.28.excalidraw.md",
+    "Drawing 2026-08-02 08.23.01.excalidraw.md",
+    "C++ ВИВЧЕННЯ/assets/Pasted image 20260729045407.png",
+    "C++ ВИВЧЕННЯ/assets/Pasted image 20260803180056.png",
+    "C++ ВИВЧЕННЯ/assets/Pasted image 20260729045332.png",
+    "C++ ВИВЧЕННЯ/assets/Pasted image 20260729045257.png",
+    "C++ ВИВЧЕННЯ/assets/Pasted image 20260729002838.png",
+    "C++ ВИВЧЕННЯ/assets/Pasted image 20260729000716.png",
     "C++ ВИВЧЕННЯ/Excalidraw-cpp/signed 1 byte int.md",
     "C++ ВИВЧЕННЯ/Excalidraw-cpp/scope_namespace.md",
     "C++ ВИВЧЕННЯ/Excalidraw-cpp/preprocessor include rules.md",
     "C++ ВИВЧЕННЯ/Excalidraw-cpp/definitionAnddeclaration.md",
     "C++ ВИВЧЕННЯ/Excalidraw-cpp/call stack.md",
     "C++ ВИВЧЕННЯ/Excalidraw-cpp/bits exponential growth.md",
-    "Drawing 2026-08-02 08.23.01.excalidraw.md",
-    "Drawing 2026-08-03 18.20.28.excalidraw.md",
-    "Pasted image 20260731104902.png",
-    "C++ ВИВЧЕННЯ/assets/Pasted image 20260803180056.png",
-    "C++ ВИВЧЕННЯ/Other C++.md",
     "C++ ВИВЧЕННЯ/Excalidraw-cpp/8 bit adresses.md",
     "дурня/lowkey правда.md",
-    "дурня/організована дурня/Pasted image 20260730045453.png",
-    "дурня/організована дурня/Pasted image 20260730045556.png",
     "дурня/Вступ.md",
     "дурня/КОД НА ОГЛЯД.md",
     "C++ ВИВЧЕННЯ/adb - android debug.md",
     "C++ ВИВЧЕННЯ/Windows enviroment variables for powershell cmd . Змінні оточення.md",
-    "C++ ВИВЧЕННЯ/assets/enviroment variables.png",
     "path.md",
-    "C++ ВИВЧЕННЯ/assets/Pasted image 20260729045407.png",
     "дурня/Drawing 2026-07-24 02.45.06.excalidraw.md",
     "МАТЕМАТИКА/вектори.md",
     "().md",
     "дурня/uh1.md",
     "дурня/SUBmarin.md",
-    "дурня/організована дурня/Pasted Image 20260724030454_563.png",
     "дурня/fignya.md",
     "C++ ВИВЧЕННЯ/assets",
     "дурня/організована дурня/trig_cheat_sheet.pdf",

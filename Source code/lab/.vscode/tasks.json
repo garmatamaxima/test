@@ -7,6 +7,14 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
+                // ===== GCC compiler warnings =====
+                // "-Wall",
+                //"-Weffc++",
+                //"-Wextra",
+                //"-Wconversion",
+                //"-Wsign-conversion",
+                //"-Werror",
+                
                 "${file}",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"

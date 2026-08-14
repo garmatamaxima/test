@@ -4,7 +4,7 @@
 #TODO inline functions, inline variables. що це
 
 ## Assumptions:
-compiler toolkit - g++, visual studio compiler, visual studio code compiler
+compiler toolkit - g++, clang
 CPU - x64 bit
 
 # **TERMINOLOGIES**
@@ -653,6 +653,9 @@ in math an integer is a number with no fractional part,  NOT `4.5`, `0.0032`. Th
 Many of the types defined in newer versions of C++ use `_t` suffix, it is a shorthand for type, this is not really consistent huh
 
 ### Void type
+
+#void-type
+
 void means no type, void is an **incomplete type**. Incomplete types cannot be instantiated for use in variables (that would be pointless), void types are used in other use cases.
 
 ##### Void functions
@@ -695,6 +698,8 @@ computers have a finite amount of free memory. Every time we define an object, a
 ##### Fundamental data type sizes and assumptions
 
 ^ce9f81
+#char #float #bool 
+#integral #int #signed-integers
 
 <mark class="hltr-cyan">C++ standart:</mark>
 - An object must occupy at least 1 byte (so that each object has a distinct memory address).
@@ -735,6 +740,9 @@ On modern machines, objects of the fundamental data types are fast, so performan
 CPUs are often optimized to process data of a certain size (e.g. 32 bits), and types that match that size may be processed quicker. On such a machine, a 32-bit int could be faster than a 16-bit short or an 8-bit char.
 
 ##### The `sizeof()` operator
+
+#sizeof-operator
+
 In order to determine the size of data types on a particular machine, C++ provides an operator named `sizeof`. The **sizeof operator** is a unary (one variable being operated on) operator that takes either a type or a variable, and returns the size of an object of that type (in bytes).
 
 ```cpp
@@ -787,6 +795,9 @@ using sizeof to get size: 10000
 ```
 
 ### Signed integers
+
+#signed-integers
+
 signed integers are values that can hold both + values and - values, the sign is stored as part of value
 ==signed integers give half of their range to negative sign==, the first bit becomes a **sign bit** #fact_check_this
 
@@ -814,6 +825,9 @@ so that would be:
 ![[Pasted image 20260803180056.png]]
 
 ##### Signed integer ranges
+
+#signed-integer-range
+
 The range of signed integer is 2^(n-1), where n is amount of digits (each digit is equal to one bit), and substraction is done because one digit is reserved for a sign digit. ^ea88aa
 
 ![[signed 1 byte int | 400x300]]
@@ -930,6 +944,7 @@ int main()
 ### Integer division
 
 ^a0e56c
+#integer-division #gotcha
 
 When doing division with two integers (called **integer division**), C++ always produces an integer result. Since integers can’t hold fractional values, any fractional portion is simply dropped (not rounded!).
 
@@ -954,6 +969,9 @@ int main()
 **Doing division with integers without loosing fractional part** - [Source material]([Source](https://www.learncpp.com/cpp-tutorial/arithmetic-operators/#:~:text=Using%20static%5Fcast%3C%3E%20to%20do%20floating%20point%20division%20with%20integers))  #TODO
 
 ### Fixed size integers
+
+#cstdint-header #int_t
+
 since `C++11` there are a set of integer types that guarantee fixed size on any architecure they are called **fixed-width integers**.
 The fixed-width integers are defined (in the `<cstdint>`\ header) 
 
@@ -980,6 +998,8 @@ int main()
 
 ### Scientific notation and Floating point numbers
 
+#scientific-notation 
+
 For scientific notation letter E is used as the "**times ten to the power of**"
 `1.25 * 10^2` = `1.25e2`
 #### How to convert decimal numbers to scientific notation
@@ -995,6 +1015,10 @@ For scientific notation letter E is used as the "**times ten to the power of**"
 - Trim off any trailing zeros (on the right end of the significand) (trailing zeros can be significant, depends on use in program)
 
 #### Floating point types/value
+
+#float 
+
+https://float.exposed/ 
 
 **Floating point** data types can hold values that contain numbers with a fractional component. Floating point types are always signed
 
@@ -1054,6 +1078,9 @@ The **precision** of a floating point type defines how many significant digits
 #TODO [learncpp.com source material](https://www.learncpp.com/cpp-tutorial/floating-point-numbers/#:~:text=Floating%20point%20precision)
 
 ### Boolean types, bool returning operators, if statements
+
+#bool
+
 **boolean data type** holds 2 states - either true or false, 1 or 0. In c++ it takes minimum of one byte (and in most implementations one byte).
 
 ```cpp
@@ -1080,6 +1107,9 @@ int main()
 ```
 
 #### If chaining, early return
+
+#if-statement #if-keyword #loop
+
 `if` statements can be chained using `else` statements. 
 
 An **if chain** checks in order (from top to bottom) starting with first `if`, if that condition is not true, CPU continues to the next `else if`  (if it is present) that will run its own condition, else if's can be chained too.  `else`  keyword is used as last element of chain, that will always execute its branch. 
@@ -1100,7 +1130,7 @@ int main()
 	}
 	else 
 	{
-	   // some stuff here
+	   return 0; // returns the function early, will end main() function before the last return
 	}
 	
 	return 0;
@@ -1110,12 +1140,14 @@ int main()
 
 #### Bool returning operators/ Operators that evaluate to bool.
 
+#logical-operators #comparison-operators
+
 <mark class="hltr-grey">Logical operators </mark>
 Logical AND `&&` - Returns true if both operands are true, otherwise false <mark class="hltr-orange">binary operator</mark>
 Logical OR `||` - Returns true if one of operands is true. When none are true, returns false <mark class="hltr-orange">binary operator</mark>
 Logical NOT `!` - Returns true if operand is false. Reverses the result <mark class="hltr-green">unary operator</mark>
 
-Important property - [Short circuit evaluation of logic operators](https://www.geeksforgeeks.org/linux-unix/short-circuiting-in-c-and-linux/#:~:text=Short%2Dcircuiting%20in%20C%2B%2B%0AIn,value%20of%20the%20right%2Dhand%20side.)
+- [Short circuit evaluation of logic operators](https://www.geeksforgeeks.org/linux-unix/short-circuiting-in-c-and-linux/#:~:text=Short%2Dcircuiting%20in%20C%2B%2B%0AIn,value%20of%20the%20right%2Dhand%20side.)
 
 <mark class="hltr-grey">Comparison Operators</mark>
 Equal `==` - Returns true if both operands are equal, otherwise false <mark class="hltr-orange">binary operator</mark>
@@ -1126,3 +1158,306 @@ Less than `<` - Returns true if first operand is less than second, otherwise fal
 
 Greater than or equal to `>=` - Returns true if first operand is greater than second or both are equal <mark class="hltr-orange">binary operator</mark>
 Less than or equal to `<=` - Returns true if first operand is Less than second or both are equal <mark class="hltr-orange">binary operator</mark>
+
+
+### Implicit type conversions, explicit type conversion with static_cast
+
+#type-conversion 
+
+The process of converting data from one type to another type is called **type conversion**, when c++ compiler automatically converts types, it is called **Implicit type conversion**. example:
+```cpp
+void func(int x)
+{
+	return x;
+}
+int main()
+{
+	func(10.05f); // literal 10 is an float, will be narrowed down to int 10, fractional part will be dropped.
+}
+
+```
+compiler flag `-Werror` detects it with error message: `-Werror=float-conversion` 
+
+(implicit - not explained but assumed to be known, while explicit means known. українською: implicit - неявний, implicit - явний  )
+
+#### <mark class="hltr-grey">3 ways to trigger an implicit type conversion</mark>
+Creating an int variable and initalising it with char value
+```cpp  
+int x{'a'}; // ASCII code for a is 97
+```
+
+passing a different type value to function
+```cpp
+int func(int x)
+{
+	return int;
+}
+int main()
+{
+	func(true) // implcit conversion from true to 1
+}
+```
+
+returning a different type value
+```cpp
+char func(int ch)
+{
+	return ch
+}
+int main()
+{
+	func(40) // conversion from 40 (int) to char.
+}
+```
+
+#### `static_cast<type> (expression)` allows to explicitly convert types which is controlled and <mark class="hltr-green">good practice </mark>
+
+#static_cast
+
+static cast is a template object in c++
+==Static cast can create narrowing conversions and other type related bugs when/if used==
+
+```cpp
+void print(char myChar) // print takes a double parameter
+{
+    std::cout << myChar << '\n';
+}
+
+int main()
+{
+    print( static_cast<char>( true + 54 ) ); // converting expression in parentheses into char type. will evaluate to 55, is an ASCII code for 7
+    return 0;
+}
+```
+
+
+### Char
+#TODO
+# **CHAPTER 5
+
+### CONSTANT VARIABLES / Constant function parameters
+
+#const #const-keyword
+
+constant value is a value that can not be changed during the program's execution. C++ supports two different kinds of constants:
+
+- **Named constants** - variables with identifiers that have constant type.
+- **Literal constants** - literals that have a constant type.
+
+to declare a constant variable a `const` keyword is used (called a “const qualifier”).
+==Const variables must be initialized, otherwise compiler will output an error==
+
+<mark class="hltr-grey">example</mark>
+```cpp
+int main()
+{
+	float x{0.1f}; // non constant variable declaration.
+	const float earthGrav{9.81f}; // constant float type variable declaration.
+	
+	float const someConst{1.0f}; // that also works, but not conventional ordering in english language. This ordering is called “east const”
+
+	someConst = 5.0f; // will result in error: "Cannot assign to variable 'input' with const-qualified type 'const int'"
+
+	return 0;
+}
+```
+
+`fact:` The type of an object includes the const qualifier, so when  `const double gravity { 9.8 };` is defined, the type of `gravity` is `const double`.
+
+[Nomenclature](https://www.learncpp.com/cpp-tutorial/constant-variables-named-constants/#:~:text=Nomenclature%3A%20type%20qualifiers)
+
+#### Compile time and runtime constants
+
+#runtime-constant #compile-time-constant #may-be-changed
+
+A **compile-time constant** is a constant whose value is known at compile-time. 
+- Literals.
+- Constant objects whose initializers are compile-time constants.
+
+A **runtime constant** is a constant whose value is determined in a runtime context. Examples include:
+- Constant function parameters.
+- Constant objects whose initializers are non-constants or runtime constants.
+
+#### Constant function parameters
+function parametets can also be made constant using `const` keyword.
+
+<mark class="hltr-grey">example</mark>
+```cpp
+void func(const int input) // on function call this parameter will be created and initalised with value of used argument
+{
+	input = 100 // will result in error: "Cannot assign to variable 'input' with const-qualified type 'const int'"
+	return input + input;
+}
+
+int main()
+{
+	int x{1};
+	func(x);
+	return 0;
+}
+```
+
+==using const variables in functions is useful when doing pass by value or pass by reference==
+
+Using `const` when returning by value is possible
+```cpp
+const int func(int input) 
+{
+	return input + input; // will return a const type temporary variable
+}
+```
+
+const type temporary variables are usually useless.
+
+#### Variables should be made constant
+it is a good practice to declare most variables constant 
+- It reduces chances of bugs (value cant be changed accidentally).
+- Compilers can optimise machine code better for constant variables.
+- Knowing a constant variable cannot be changed is useful for debugging and reasoning.
+
+#### Object like macros create constant values
+Object like macros should not be preffered to use as they have a variety of issues.
+```cpp
+#include <iostream>
+#define AGE 15
+
+int main()
+{
+    std::cout << "My age is: " << AGE << '\n'; // will create a constant integer literal. 
+    return 0;
+}
+```
+
+
+### LITERALS
+
+#literals 
+
+**Literals** are values that are inserted directly into the code, literals have types and values, but no identifier.
+
+```cpp
+const int x{5}; // constant integer variable with value 5 literal used as initaliser.
+float y{0.5f} // float variable with value literal 0.5.
+```
+
+| Literal value        | Examples        | Default literal type | Note                           |
+| -------------------- | --------------- | -------------------- | ------------------------------ |
+| integer value        | 5, 0, -3        | int                  |                                |
+| boolean value        | true, false     | bool                 |                                |
+| floating point value | 1.2, 0.0, 3.4   | double (not float!)  |                                |
+| character            | ‘a’, ‘\n’       | char                 |                                |
+| C-style string       | “Hello, world!” | const char[14]       | C-style string literal  string |
+
+#### Literal suffixes
+a type of a literal value can be specified using a suffix
+
+#literal-suffixes
+
+| Data type      | Suffix                                 | Meaning                                   |
+| -------------- | -------------------------------------- | ----------------------------------------- |
+| integral       | u or U                                 | unsigned int                              |
+| integral       | l or L                                 | long                                      |
+| integral       | ul, uL, Ul, UL, lu, lU, Lu, LU         | unsigned long                             |
+| integral       | ll or LL                               | long long                                 |
+| integral       | ull, uLL, Ull, ULL, llu, llU, LLu, LLU | unsigned long long                        |
+| integral       | z or Z                                 | The signed version of std::size_t (C++23) |
+| integral       | uz, uZ, Uz, UZ, zu, zU, Zu, ZU         | std::size_t (C++23)                       |
+| floating point | f or F                                 | float                                     |
+| floating point | l or L                                 | long double                               |
+| string         | s                                      | std::string                               |
+| string         | sv                                     | std::string_view                          |
+|                |                                        |                                           |
+
+==By default, floating point literals have a type of `double`.==
+so to avoid compiler warning and unwanted conversions, this example works:
+```cpp
+float x{0.5} // compiler will convert double 0.5 into float 0.5, bad practice
+float y{0.5f} // initalising with float literal, good
+```
+
+#### Scientific notation for floating point literals
+
+#scientific-notation
+
+scientific notation also works for initalising float type variables
+```cpp
+double c{ 2.99792458e8 }; // e means * 10^8
+```
+
+#### С String literals
+
+#string #c-string
+
+a **string** is a collection of sequential characters.
+A single char is placed inside single quotes `'a'` while a string is placed into double quotes `"abc"`
+
+c++ inherits its basic strings from c language, C has no strings as type so an **array** has to be used, example of C string declaration and initalisation:
+```cpp
+int main()
+{
+    char myText[] = "my string"; // creates an array with index size of 10 chars, last char in a string is a null terminator
+    return 0;
+}
+```
+
+**null terminator** - a char value `\000`, used to indicate that string ends. A string that ends with a null terminator is called a **null-terminated string**.
+
+
+#### Magic numbers
+A magic number is a literal that has unclear meaning and is ambiguious to debug
+```cpp
+double controller(4.0,0.0, 15.0f) // hard to read the meaning what those literals should do.
+```
+
+### AS IF RULE / compiler optimisation
+
+#as-if-rule #compiler-optimisations
+
+The [**as-if rule**](https://www.learncpp.com/cpp-tutorial/the-as-if-rule-and-compile-time-optimization/#:~:text=The%20as%2Dif%20rule%20says%20that%20the%20compiler%20can%20modify%20a%20program%20however%20it%20likes%20in%20order%20to%20produce%20more%20optimized%20code%2C%20so%20long%20as%20those%20modifications%20do%20not%20affect%20a%20program%E2%80%99s%20%E2%80%9Cobservable%20behavior%E2%80%9D%2E) says that the compiler can modify a program however it likes in order to produce more optimized code, so long as those modifications do not affect a program’s observable behavior.
+
+#Compile-time-evaluation
+#Constant-folding
+#Constant-propagation
+#Dead-code-elimination
+
+### Constant expressions / compile time programming
+
+#compile-time-programming #constant-expressions #runtime-expressions
+[cppreference](https://en.cppreference.com/cpp/language/constant_expression)
+
+A **constant expression** is a non-empty sequence of literals, constant variables, operators, and function calls. ==that must be evaluated at compile time== *constant expressions* allow to optimise programs for faster execution OR checking if the expression is valid at compile time.
+
+An expression that is not a constant expression is called **runtime expression**
+
+---
+
+<mark class="hltr-grey">Constat expressions contain</mark> #fact_check_this 
+- Literals (e.g. ‘5’, ‘1.2’) `// an expression consisting of a literal is a constant expression.`
+- Most operators with constant expression operands (e.g. `3 + 4`, `2 * sizeof(int)`).
+- Const integral variables with a constant expression initializer (e.g. `const int x { 5 };`). This is a historical exception -- in modern C++, constexpr variables are preferred.
+- Constexpr variables (discussed in upcoming lesson [5.6 -- Constexpr variables](https://www.learncpp.com/cpp-tutorial/constexpr-variables/)).
+- Constexpr function calls with constant expression arguments (see [F.1 -- Constexpr functions](https://www.learncpp.com/cpp-tutorial/constexpr-functions/)).
+<mark class="hltr-grey">Constant expressions can also contain:</mark>
+- Non-type template parameters (see [11.9 -- Non-type template parameters](https://www.learncpp.com/cpp-tutorial/non-type-template-parameters/)).
+- Enumerators (see [13.2 -- Unscoped enumerations](https://www.learncpp.com/cpp-tutorial/unscoped-enumerations/)).
+- Type traits (see the [cppreference page for type traits](https://en.cppreference.com/w/cpp/header/type_traits)).
+- Constexpr lambda expressions (see [20.6 -- Introduction to lambdas (anonymous functions)](https://www.learncpp.com/cpp-tutorial/introduction-to-lambdas-anonymous-functions/)).
+
+<mark class="hltr-orange">these cannot be used in a constant expression</mark>
+- Non-const variables, like: `int x{0} //`
+- Const non-integral variables, even when they have a constant expression initializer (e.g. `const double d { 1.2 };`). To use such variables in a constant expression, define them as constexpr variables instead (see lesson [5.6 -- Constexpr variables](https://www.learncpp.com/cpp-tutorial/constexpr-variables/)).
+- The return values of non-constexpr functions (even when the return expression is a constant expression).
+- Function parameters (even when the function is constexpr).
+- Operators with operands that are not constant expressions (e.g. `x + y` when `x` or `y` is not a constant expression, or `std::cout << "hello\n"` as `std::cout` is not a constant expression).
+- Operators `new`, `delete`, `throw`, `typeid`, and `operator,` (comma).
+
+---
+
+#rough-sketch & #fact_check_this 
+
+constexpr function - precompile output if arguments are constant expressions
+constexpr if -  #TODO 
+constexpr statement - evaluates if operands / variables are known at compile time 
+rule of thumb - non <mark class="hltr-green">constexpr functions</mark> cannot be used in constexpr (constant expressions).
+
+If constexpr is used as part of function prototype, it allows this function to be used as part of constant expression. IF constexpr is used as part of expression, it has to guarantee this expression will be precompiled

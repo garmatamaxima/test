@@ -1,3 +1,4 @@
+## STD 
 ### `<iostream>`
 
 
@@ -11,6 +12,8 @@ part of iostream?? #Note_for_future
 ### `<climits>`
 
 ##### `CHAR_BIT` - preprocessor macro, evaluates to 8.
+
+## STUFF.
 
 ### Pointers and references
 
@@ -63,5 +66,24 @@ int main()
     // good practice part 2: Safe practice is to pass by pointer, so compiler will enforce knowledge of using a pointer.
 
     return 0;
+}
+```
+
+### Semantic error: math precedence and c++ operator precedence confusion with squaring
+
+mathematical expressions follow the ordering of PEMDAS, so `-3^2 = -(3*3) = -9`, exponents are evaluated first, then unary minus sign
+
+c++ provides a `<cmath>` header with mathematical functions. but there is semantic bug hidden
+
+```cpp
+#include <cmath>
+int main()
+{
+	double x = pow(-2,2); // evaluates to (-2)^2 = (-2)*(-2) = 4
+	// because -2 is a signed negative value integer with negative value, not an positive value with unary -operator attached!!!!
+	
+	double y = -(2*2) // is mathematically correct squaring. same as -2^2
+	
+	return 0;
 }
 ```

@@ -76,8 +76,7 @@
               "title": "Закладки"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -169,11 +168,11 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 223.5
+    "width": 211.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -187,17 +186,17 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "be35e5d48d456b3d",
+  "active": "8118911a055ec23b",
   "lastOpenFiles": [
+    "C++ ВИВЧЕННЯ/Other C++.md",
+    "C++ ВИВЧЕННЯ/g++.md",
     "C++ ВИВЧЕННЯ/Learning.md",
     "дурня/організована дурня/ch2.md",
     "C++ ВИВЧЕННЯ/Excalidraw-cpp/definitionAnddeclaration.md",
-    "C++ ВИВЧЕННЯ/Other C++.md",
     "дурня/ідеї проєктів/backend та frontend на C++ та js.md",
     "дурня/ідеї проєктів/тетріс на с++.md",
     "дурня/ідеї проєктів/генератор персональних данних та база данних + gui, додаток на c++.md",
     "C++ ВИВЧЕННЯ/Excalidraw-cpp/unsigned integer wraparound.md",
-    "C++ ВИВЧЕННЯ/g++.md",
     "Pasted image 20260805212929.png",
     "Pasted image 20260806180902.png",
     "Pasted image 20260806180924.png",

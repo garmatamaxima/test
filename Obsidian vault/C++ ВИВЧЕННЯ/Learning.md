@@ -1461,3 +1461,98 @@ constexpr statement - evaluates if operands / variables are known at compile tim
 rule of thumb - non <mark class="hltr-green">constexpr functions</mark> cannot be used in constexpr (constant expressions).
 
 If constexpr is used as part of function prototype, it allows this function to be used as part of constant expression. IF constexpr is used as part of expression, it has to guarantee this expression will be precompiled
+
+### std::string
+#std-string #string 
+
+`std::string` is a type that is defined in the `<string>` header.
+```cpp
+#include <string>
+int main()
+{
+	std::string mystring{"Hi, i am string"}; // defining a variabled
+	return 0;
+}
+```
+
+like C string (defined using arrays), an `std::string` is automatically compiled with null terminator as the last char.
+
+`std::string object dynamically resizes itself once reassigned`
+```cpp
+int main()
+{
+	std::string mystring2{"Abc"};
+	
+	mystring2 = "banana, apple"; // reassigning with different size.
+	
+	return 0;
+}
+```
+
+if `string` has not enough memory it will automatically request additional memory (at runtime) using a form of memory allocation known as dynamic memory allocation.
+
+#### std::cout input specifics
+#std-cout #std-getline #std-ws #iostream-header
+
+when using operator>> to extract string into `std::cin`, `operator>>` only returns characters up to the first whitespace it encounters. Any other characters are left inside `std::cin`, waiting for the next extraction.
+
+`std::getline(std::cin, input) should be used`
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+    std::string uinput{};
+    std::getline(std::cin >> std::ws, uinput); // std::ws input manipulator allows to ignore leading whitespaces
+    // aka: whitespace char's that are placed in front of any useful text chars.
+    // std::ws is not saved, so needs to be done for all std::getline calls
+    std::cout << uinput <<  '\n' ;
+
+}
+```
+
+#### std::string.lenght(), std::ssize()
+#string-lenght #member-function
+
+the `length()` is a **member function** and it is declared inside of `std::string`, it is sometimes written as `std::string::length()` in documentation. In function calls it is written as string type object call `identifier.lenght()`
+
+- `std::string::length()` returns an unsigned integral value
+- Initializing a `std::string` in function parameters is expensive (its an class object)
+- Passing `std::string` by value is expensive (on function call a copy is created) 
+
+```cpp
+#include <iostream>
+#include <string>
+int main()
+{
+    std::string name{"somename"};
+    std::cout << name.lenght(); // member function of string object (the function that is part of string object class)
+    return 0;
+}
+```
+
+`std::string` is required to be null-terminated (as of C++11), ==the returned length of a `std::string` does not include the implicit null-terminator character==.
+
+#std-ssize
+`std::ssize()` is a function defined in #cpp20, returns size of string.
+
+#### std::string literals
+#literals-string_literals
+
+- provided by `<xstring>`
+
+`std::string` literals can be created using `s` suffix imported from `std::string_literals` namespace.
+``` cpp
+#include <string>
+int main()
+using namespace std::string_literals;
+{
+	std::string cppliteral{"abc"s}; // string literal using suffix s from std
+	char cliteral[] {"abc"}; // an array of chars, 3 chars + 1 null terminator
+	return 0;
+}
+```
+
+### std::string_view
+#TODO

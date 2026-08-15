@@ -1,17 +1,22 @@
 ## STD 
-### `<iostream>`
+#### `<iostream>`
 
 
 
-### `<iomanip>`
+#### `<iomanip>`
 part of iostream?? #Note_for_future 
 
 ###### `std::setw` -  sets the width of the subsequent output
 
 
-### `<climits>`
+#### `<climits>`
 
-##### `CHAR_BIT` - preprocessor macro, evaluates to 8.
+#### `CHAR_BIT` - preprocessor macro, evaluates to 8.
+
+#### `__cplusplus macro`
+#macro  #current-cpp-version
+
+`__cplusplus` macro resolves to a current c++ version
 
 ## STUFF.
 

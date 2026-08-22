@@ -55,7 +55,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "[\"tags\"]",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -76,7 +76,8 @@
               "title": "Закладки"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -168,7 +169,7 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
@@ -186,11 +187,15 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "8118911a055ec23b",
+  "active": "63fb7841a95d1c5e",
   "lastOpenFiles": [
+    "Drawing 2026-08-02 08.23.01.excalidraw.md",
+    "Drawing 2026-08-03 18.20.28.excalidraw.md",
+    "Pasted image 20260806180902.png",
+    "Pasted image 20260806180924.png",
+    "C++ ВИВЧЕННЯ/Learning.md",
     "C++ ВИВЧЕННЯ/Other C++.md",
     "C++ ВИВЧЕННЯ/g++.md",
-    "C++ ВИВЧЕННЯ/Learning.md",
     "дурня/організована дурня/ch2.md",
     "C++ ВИВЧЕННЯ/Excalidraw-cpp/definitionAnddeclaration.md",
     "дурня/ідеї проєктів/backend та frontend на C++ та js.md",
@@ -198,11 +203,7 @@
     "дурня/ідеї проєктів/генератор персональних данних та база данних + gui, додаток на c++.md",
     "C++ ВИВЧЕННЯ/Excalidraw-cpp/unsigned integer wraparound.md",
     "Pasted image 20260805212929.png",
-    "Pasted image 20260806180902.png",
-    "Pasted image 20260806180924.png",
     "Pasted image 20260731104902.png",
-    "Drawing 2026-08-03 18.20.28.excalidraw.md",
-    "Drawing 2026-08-02 08.23.01.excalidraw.md",
     "C++ ВИВЧЕННЯ/assets/Pasted image 20260729045407.png",
     "C++ ВИВЧЕННЯ/assets/Pasted image 20260803180056.png",
     "C++ ВИВЧЕННЯ/assets/Pasted image 20260729045332.png",
@@ -223,7 +224,6 @@
     "path.md",
     "дурня/Drawing 2026-07-24 02.45.06.excalidraw.md",
     "МАТЕМАТИКА/вектори.md",
-    "().md",
     "C++ ВИВЧЕННЯ/assets",
     "дурня/організована дурня/trig_cheat_sheet.pdf",
     "дурня/організована дурня/symbols.pdf",

@@ -14,6 +14,12 @@ float fallEvent(float pos_x, float& velocity, float ground_x, float time)
 	return updatedPos_x;
 }
 
+int dihmaster()
+{
+	return 0;
+}
+
+
 int main()
 {
 	bool touchdown{false}; // ball touched ground - state

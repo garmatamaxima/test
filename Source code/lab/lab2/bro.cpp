@@ -1,38 +1,28 @@
-#include <cstdint>
+
+#include <cstdint> // for std::uint8_t
 #include <iostream>
-#include <string>
-#include <string_view>
 
-using namespace std::string_literals;
-
-int i32clamp( std::int64_t input)
+int main()
 {
-	if (input > INT32_MAX)
-	{
-		return INT32_MAX;
-	}
-	else if (input < INT32_MIN)
-	{
-		return INT32_MIN;
-	}
-	return input;
+  std::cout << "How old are you?\n";
+
+  std::uint8_t age{};
+  std::cin >> age;
+
+  std::cout << "Allowed to drive a car in Texas: ";
+
+  if (age >= 16)
+      std::cout << "Yes";
+  else
+      std::cout << "No";
+
+  std::cout << ".\n";
+
+  return 0;
 }
 
 /*
-Write a program that asks the user to enter their full name and their age.
- As output, tell the user the sum of their age and the number of characters in their name (use the std::string::length()
-  member function to get the length of the string). For simplicity, count any spaces in the name as a character.
-
-Sample output:
-
-Enter your full name: John Doe
-Enter your age: 32
-Your age + length of name is: 40
-*/
-
-
-
-int main()
+int main() 
 {
 	std::string fullName;
 	int age;
@@ -44,7 +34,7 @@ int main()
 	std::cout << "your age + lenght of name == " << age + static_cast<int>( fullName.length() ) <<  '\n' ;
 	return 0;
 }
-
+*/
 /*
 int main()
 {

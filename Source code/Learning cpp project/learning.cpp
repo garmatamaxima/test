@@ -487,10 +487,6 @@ float adder_demoProblem(float x, float y)
 }
 
 
-
-
-
-
 int main()
 {
   int mainloop_iteration{1};

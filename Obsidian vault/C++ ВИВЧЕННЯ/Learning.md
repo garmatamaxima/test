@@ -1233,7 +1233,7 @@ int main()
 
 ### Char
 #TODO
-# **CHAPTER 5
+# **CHAPTER 5 const, constexpr, std::String
 
 ### CONSTANT VARIABLES / Constant function parameters
 
@@ -1554,5 +1554,267 @@ using namespace std::string_literals;
 }
 ```
 
-### std::string_view
+#### std::string_view
 #TODO
+
+# CHAPTER 6
+
+### OPERATOR PRECEDENCE
+#operator-precedence #operator-associativity 
+
+**Operator precedence** - is an order in which operators will be evaulated. higher precedence operators are evaluated first.
+
+**Operator associativity** - is a rule that determines whether equal precedence operators are evaluated left - right or right - left.
+<mark class="hltr-grey">example:</mark>
+```
+x = 3 + 4 - 2 // addition and substraction have associativity Left to Right and same precedence of 6
+// 3 + 4 first then 7 - 2 then assignment =operator  x = 7
+```
+
+#operator-precedence-associativity-table #precedence
+
+| Prec/Ass | Operator                                                                                                                                                                                               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                             | Pattern                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1 L->R   | ::  <br>::                                                                                                                                                                                             | Global scope (unary)  <br>Namespace scope (binary)                                                                                                                                                                                                                                                                                                                                                                                                                      | ::name  <br>class_name::member_name                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| 2 L->R   | ()  <br>()  <br>type()  <br>type{}  <br>[]  <br>.  <br>->  <br>++  <br>––  <br>typeid  <br>const_cast  <br>dynamic_cast  <br>reinterpret_cast  <br>static_cast  <br>sizeof…  <br>noexcept  <br>alignof | Parentheses  <br>Function call  <br>Functional cast  <br>List init temporary object (C++11)  <br>Array subscript  <br>Member access from object  <br>Member access from object ptr  <br>Post-increment  <br>Post-decrement  <br>Run-time type information  <br>Cast away const  <br>Run-time type-checked cast  <br>Cast one type to another  <br>Compile-time type-checked cast  <br>Get parameter pack size  <br>Compile-time exception check  <br>Get type alignment | (expression)  <br>function_name(arguments)  <br>type(expression)  <br>type{expression}  <br>pointer[expression]  <br>object.member_name  <br>object_pointer->member_name  <br>lvalue++  <br>lvalue––  <br>typeid(type) or typeid(expression)  <br>const_cast<type>(expression)  <br>dynamic_cast<type>(expression)  <br>reinterpret_cast<type>(expression)  <br>static_cast<type>(expression)  <br>sizeof…(expression)  <br>noexcept(expression)  <br>alignof(type) |
+| 3 R->L   | +  <br>-  <br>++  <br>––  <br>!  <br>not  <br>~  <br>(type)  <br>sizeof  <br>co_await  <br>&  <br>*  <br>new  <br>new[]  <br>delete  <br>delete[]                                                      | Unary plus  <br>Unary minus  <br>Pre-increment  <br>Pre-decrement  <br>Logical NOT  <br>Logical NOT  <br>Bitwise NOT  <br>C-style cast  <br>Size in bytes  <br>Await asynchronous call  <br>Address of  <br>Dereference  <br>Dynamic memory allocation  <br>Dynamic array allocation  <br>Dynamic memory deletion  <br>Dynamic array deletion                                                                                                                           | +expression  <br>-expression  <br>++lvalue  <br>––lvalue  <br>!expression  <br>not expression  <br>~expression  <br>(new_type)expression  <br>sizeof(type) or sizeof(expression)  <br>co_await expression (C++20)  <br>&lvalue  <br>*expression  <br>new type  <br>new type[expression]  <br>delete pointer  <br>delete[] pointer                                                                                                                                   |
+| 4 L->R   | ->*  <br>.*                                                                                                                                                                                            | Member pointer selector  <br>Member object selector                                                                                                                                                                                                                                                                                                                                                                                                                     | object_pointer->*pointer_to_member  <br>object.*pointer_to_member                                                                                                                                                                                                                                                                                                                                                                                                   |
+| 5 L->R   | *  <br>/  <br>%                                                                                                                                                                                        | Multiplication  <br>Division  <br>Remainder                                                                                                                                                                                                                                                                                                                                                                                                                             | expression * expression  <br>expression / expression  <br>expression % expression                                                                                                                                                                                                                                                                                                                                                                                   |
+| 6 L->R   | +  <br>-                                                                                                                                                                                               | Addition  <br>Subtraction                                                                                                                                                                                                                                                                                                                                                                                                                                               | expression + expression  <br>expression - expression                                                                                                                                                                                                                                                                                                                                                                                                                |
+| 7 L->R   | <<  <br>>>                                                                                                                                                                                             | Bitwise shift left / Insertion  <br>Bitwise shift right / Extraction                                                                                                                                                                                                                                                                                                                                                                                                    | expression << expression  <br>expression >> expression                                                                                                                                                                                                                                                                                                                                                                                                              |
+| 8 L->R   | <=>                                                                                                                                                                                                    | Three-way comparison (C++20)                                                                                                                                                                                                                                                                                                                                                                                                                                            | expression <=> expression                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| 9 L->R   | <  <br><=  <br>>  <br>>=                                                                                                                                                                               | Comparison less than  <br>Comparison less than or equals  <br>Comparison greater than  <br>Comparison greater than or equals                                                                                                                                                                                                                                                                                                                                            | expression < expression  <br>expression <= expression  <br>expression > expression  <br>expression >= expression                                                                                                                                                                                                                                                                                                                                                    |
+| 10 L->R  | ==  <br>!=                                                                                                                                                                                             | Equality  <br>Inequality                                                                                                                                                                                                                                                                                                                                                                                                                                                | expression == expression  <br>expression != expression                                                                                                                                                                                                                                                                                                                                                                                                              |
+| 11 L->R  | &                                                                                                                                                                                                      | Bitwise AND                                                                                                                                                                                                                                                                                                                                                                                                                                                             | expression & expression                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| 12 L->R  | ^                                                                                                                                                                                                      | Bitwise XOR                                                                                                                                                                                                                                                                                                                                                                                                                                                             | expression ^ expression                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| 13 L->R  | \|                                                                                                                                                                                                     | Bitwise OR                                                                                                                                                                                                                                                                                                                                                                                                                                                              | expression \| expression                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| 14 L->R  | &&  <br>and                                                                                                                                                                                            | Logical AND  <br>Logical AND                                                                                                                                                                                                                                                                                                                                                                                                                                            | expression && expression  <br>expression and expression                                                                                                                                                                                                                                                                                                                                                                                                             |
+| 15 L->R  | \| \|<br>or                                                                                                                                                                                            | Logical OR  <br>Logical OR                                                                                                                                                                                                                                                                                                                                                                                                                                              | expression \| expression  <br>expression or expression                                                                                                                                                                                                                                                                                                                                                                                                              |
+| 16 R->L  | throw  <br>co_yield  <br>?:  <br>=  <br>*=  <br>/=  <br>%=  <br>+=  <br>-=  <br><<=  <br>>>=  <br>&=  <br>\|=  <br>^=                                                                                  | Throw expression  <br>Yield expression (C++20)  <br>Conditional  <br>Assignment  <br>Multiplication assignment  <br>Division assignment  <br>Remainder assignment  <br>Addition assignment  <br>Subtraction assignment  <br>Bitwise shift left assignment  <br>Bitwise shift right assignment  <br>Bitwise AND assignment  <br>Bitwise OR assignment  <br>Bitwise XOR assignment                                                                                        | throw expression  <br>co_yield expression  <br>expression ? expression : expression  <br>lvalue = expression  <br>lvalue *= expression  <br>lvalue /= expression  <br>lvalue %= expression  <br>lvalue += expression  <br>lvalue -= expression  <br>lvalue <<= expression  <br>lvalue >>= expression  <br>lvalue &= expression  <br>lvalue \|= expression  <br>lvalue ^= expression                                                                                 |
+| 17 L->R  | ,                                                                                                                                                                                                      | Comma operator                                                                                                                                                                                                                                                                                                                                                                                                                                                          | expression, expression                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+
+<mark class="hltr-green">good practice</mark>  - using parentheses to specify order of operations (looking up operator table takes time)
+```cpp
+x = y || b && a // b and a or y. logical and has higher precedence than logical or.
+x = (y || b) && a; // makes it easy to read that y and b or a, without looking up operator precedence table
+```
+
+#### Value computation
+#value-computation
+The C++ standard uses the term **value computation** to mean the execution of operators in an expression to produce a value. The precedence and association rules determine the order in which value computation happens.
+
+For example, given the expression `4 + 2 * 3`, due to the precedence rules this groups as `4 + (2 * 3)`. The value computation for `(2 * 3)` must happen first, so that the value computation for `4 + 6` can be completed.
+
+#### Evaluation of operands
+#evaluation-of-operands
+The C++ standard (mostly) uses the term **evaluation** to refer to the evaluation of operands (not the evaluation of operators or expressions!). For example, given expression `a + b`, `a` will be evaluated to produce some value, and `b` will be evaluated to produce some value. These values can be then used as operands to `operator+` for value computation.
+
+- term “evaluates” usually means evaluation of a full expression, not parts of it (subexpressions).
+
+#### The order of evaluation of operands (including function arguments) is mostly unspecified
+
+<mark class="hltr-grey">example:</mark> `a * b + c * d
+
+the precedence and associativity rules ==only tell us== how operators and operands are grouped and the order in which value computation will occur. ==They do not tell us== the order in which the operands or subexpressions are evaluated. ==The compiler is free to== evaluate operands `a`, `b`, `c`, or `d` in any order. The compiler is also free to calculate `a * b` or `c * d` first.
+
+- The Clang compiler evaluates arguments in left-to-right order. The GCC compiler evaluates arguments in right-to-left order. This is **implementation defined behaviour**
+
+
+```cpp
+#include <iostream>
+
+int getValue()
+{
+    std::cout << "Enter an integer: ";
+
+    int x{};
+    std::cin >> x;
+    return x;
+}
+
+void printCalculation(int x, int y, int z)
+{
+    std::cout << x + (y * z);
+}
+
+int main()
+{
+    printCalculation(getValue(), getValue(), getValue()); // this line is ambiguous
+    // compiler is free to evaluate in any order
+
+    return 0;
+}
+```
+instead this main function will be more deterministic
+```cpp
+int main()
+{
+    int x getValue();
+    int y getValue();
+    int z getValue();
+    // this ordering is determinstic on any compiler
+    
+    printCalculation(x,y,z); // ok.
+    return 0;
+}
+```
+
+<mark class="hltr-green">Conclusion</mark>
+- Operands, function arguments, and subexpressions may be evaluated in any order.
+- Precedence and associativity is used only to determine how operands are grouped with operators, and the order of value computation.
+
+### ARITHMETIC OPERATORS
+#addition #unary-minus #substraction #multiplication #division #remainder #division-by-zero
+
+**UNARY**
+are operators that take one operand
+
+Unary `-operator` and `+operator`  
+- unary -operator returns `operand * -1` 
+- unary + operator returns same number
+<mark class="hltr-green">For readability</mark> both operators should be placed like this `-x`, `+x`
+
+**BINARY**
+are operators that take two operands
+
+|Operator|Symbol|Form|Operation|
+|---|---|---|---|
+|Addition|+|x + y|x plus y|
+|Subtraction|-|x - y|x minus y|
+|Multiplication|*|x * y|x multiplied by y|
+|Division|/|x / y|x divided by y|
+|Remainder|%|x % y|The remainder of x divided by y|
+
+#### Integer and floating point division
+==If either== (or both) of the operands are floating point values, the _division operator_ performs floating point division. **Floating point division** returns a floating point value, and the fraction is kept.
+
+==If both== operators are integral values,  /operator performs integer division (fractional part is ignored!)!.
+ 
+```cpp
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	int int_x{ 7 }, int_y{ 4 };
+	float f_x{ 7.0f }, f_y{ 4.0f };
+
+	cout << "int 4 / int 7 = " << int_y / int_x << '\n'; // outputs 0, fractional part ignored.
+	cout << "float 7 / int 4 = " << f_x / int_y << '\n'; // outputs 1.75, output type = float.
+	return 0;
+}
+```
+
+- `static_cast<>()` should be used to perform explicit floating point division
+
+#### Division by 0, division by 0.0
+
+#TODO
+
+### Increment / decrement operators `++x` `x++` 
+#increment-operator-prefix #increment-operator-postfix 
+
+|Operator|Symbol|Form|Operation|
+|---|---|---|---|
+|Prefix increment (pre-increment)|++|++x|Increment x, then return x|
+|Prefix decrement (pre-decrement)|––|––x|Decrement x, then return x|
+|Postfix increment (post-increment)|++|x++|Copy x, then increment x, then return the copy|
+|Postfix decrement (post-decrement)|––|x––|Copy x, then decrement x, then return the copy|
+
+- The prefix increment/decrement operators are very straightforward. First, the operand is incremented or decremented, and then expression evaluates to the value of the operand. 
+
+- The postfix increment/decrement operators ==are trickier==. First, a copy of the operand is made. Then the operand (not the copy) is incremented or decremented. Finally, the copy (not the original) is evaluated
+
+#### Side effects, not deterministic outputs
+#side-effects
+A function or expression is said to have a **side effect** if it has some observable effect beyond producing a return value.
+```cpp
+x = 5; // the assignment operator has side effect of changing value of x
+++x; // operator++ has side effect of incrementing x
+std::cout << x; // operator<< has side effect of modifying the state of the console
+```
+
+#warning
+==Side effects can cause order of evaluation issues== The C++ standard does not define the order in which function arguments are evaluated.
+```cpp
+#include <iostream>
+
+int add(int x, int y)
+{
+    return x + y;
+}
+
+int main()
+{
+    int x { 5 };
+    int value{ add(x, ++x) }; // undefined behavior: is this 5 + 6, or 6 + 6?
+    // It depends on what order compiler evaluates the function arguments in
+
+    std::cout << value << '\n'; // value could be 11 or 12, depending on how the above line evaluates!
+
+    return 0;
+}
+```
+
+When `x` is initialized to `1`, Visual Studio and GCC evaluate this as 6 + 6, and Clang evaluates it as `5 + 6`! This is due to differences in when the compilers apply the side effect of incrementing `x`.
+
+These problems can generally _all_ be avoided by ensuring that any variable that has a side-effect applied is used ==no more than once== in a given statement.
+
+### Comma operator `,`
+#comma-operator
+
+| Operator | Symbol | Form | Operation                             | Precedence  |
+| -------- | ------ | ---- | ------------------------------------- | ----------- |
+| Comma    | ,      | x, y | Evaluate x then y, returns value of y | 17 (lowest) |
+
+in c++ comma symbol is also used as separator in function calls/prototypes
+
+### Conditional operator `x ? y : z`
+#conditional-operator
+The conditional operator evaluates as part of an expression
+
+| Operator    | Form      | Meaning                                                                | pattern                                | associativity/precedence |
+| ----------- | --------- | ---------------------------------------------------------------------- | -------------------------------------- | ------------------------ |
+| Conditional | c ? x : y | If conditional `c` is `true` then evaluate `x`, otherwise evaluate `y` | c ? expression true : expression false | 16 R -> L                |
+
+variables defined inside if statements `if() {}` are destroyed at the end of braces `}` , so conditional operator `c ? x : y` is useful inside expression evaluations.
+
+- The type of the second and third operand must match.
+- The compiler must be able to find a way to convert one or both of the second and third operands to matching types. The conversion rules the compiler uses are fairly complex and may yield surprising results in some cases.
+- one or both of the second and third operands is allowed to be a throw expression.
+
+### Relational operators and floating point comparisons
+|Operator|Symbol|Form|Operation|
+|---|---|---|---|
+|Greater than|>|x > y|true if x is greater than y, false otherwise|
+|Less than|<|x < y|true if x is less than y, false otherwise|
+|Greater than or equals|>=|x >= y|true if x is greater than or equal to y, false otherwise|
+|Less than or equals|<=|x <= y|true if x is less than or equal to y, false otherwise|
+|Equality|==|x == y|true if x equals y, false otherwise|
+|Inequality|!=|x != y|true if x does not equal y, false otherwise|
+good practice
+```cpp
+if (b1 == true); // using redundant equality operators 
+
+if (b1); // should be this for readability
+
+if (b1 == false); //redundant
+
+if (!b1) //unary not, good.
+```
+
+**floating point values should not be compared using `==` or `!=` operators!** floating point values are imprecise and a tiny calculation error at the last right digit is expected
+
+It is safe to compare a floating point literal with a variable of the same type that has been initialized with a literal of the same type, so long as the number of significant digits in each literal does not exceed the minimum precision for that type. Float has a minimum precision of 6 significant digits, and double has a minimum precision of 15 significant digits.
+
+It is generally ==not safe== to compare floating point literals of different types.
+
+### Logical operators
+#todo short circuiting and xor stuff..
+
+### BITWISE
+#TODO круто
+
+# CHAPTER 7 
+
+Linkage

@@ -1817,4 +1817,297 @@ It is generally ==not safe== to compare floating point literals of different typ
 
 # CHAPTER 7 
 
-Linkage
+A good practice to define globals inside a namespace.
+<mark class="hltr-grey">globals.cpp</mark>
+```cpp
+#include "bitsets.h"
+
+namespace global // user defined namespace
+{
+	// external linkage constant global variable - visible in other translation units (TU's) due to being external, 
+	// value cant be changed (global).
+	// lifetime - created at the beginning of a program before main(), destroyed when program terminates
+	// scope - visible in any block.
+	// linkage - external, can be acessed in other TU's.
+	extern const float xoo{ 0.1f }; 
+	
+	// internal linkage constant global variable - visible inside this TU, value cant be changed (global).
+	// lifetime - created at the beginning of a program before main(), destroyed when program terminates
+	// scope - visible in any block.
+	// linkage - internal, can be acessed in this file.
+	static const int yoo{ 15 };
+
+	// constexpr global variable -  visible inside this TU, cant be changed (constexpr variables need to guarantee being constant)
+	// lifetime - created at the beginning of a program before main(), destroyed when program terminates
+	// scope - visible in any block.
+	// linkage - internal, can be acessed in this file.
+	constexpr int voo{ 0 };
+
+	// const global variable -  visible inside this TU, cant be changed (globals enforce read only)
+	// lifetime - created at the beginning of a program before main(), destroyed when program terminates
+	// scope - visible in any block.
+	// linkage - internal, can be acessed in this file.
+	const int im_maximalistic_person{ INT32_MAX };
+}
+```
+
+<mark class="hltr-grey">globals.h</mark>
+```cpp
+//// header file is needed to propagate declarations to other files
+
+#ifndef BITSETS_H_INCLUDES
+#define BITSETS_H_INCLUDES
+
+namespace global
+{
+	extern const float xoo; // the definition of this variable is located in paired source code file. This is declaration used to be seen in other source files.
+}
+#endif
+```
+
+--- 
+
+==NOTE==: In order for variables to be usable in compile-time contexts, such as array sizes, the compiler has to see the variable’s definition (not just a forward declaration). `extern const float xoo` in `globals.h`cant be made made constexpr.
+
+Because the compiler compiles each source file individually, it can only see variable definitions that appear in the source file being compiled (which includes any included headers). For example, variable definitions in _constants.cpp_ are not visible when the compiler compiles _main.cpp_. For this reason, constexpr variables cannot be separated into header and source file, they have to be defined in the header file.
+
+==header file==, this is usable in c++17
+```cpp
+
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+inline constexpr myConstant{1}; // allows to propagate constexpr myConstant variable into files that include it.
+#endif
+```
+
+---
+
+**Qualified and unqualified names:** 
+Qualified - inside of namespace `std::cout`
+unqualified - not namespaced `x`
+
+**Using keyword :**
+Using directives and using declarations are scoped inside of block they were defined in:
+```cpp
+{
+	using std::cout; // cout can be used without namespace qualifier operator here
+	cout << "123";
+} // cout no longer can be used without using declaration
+```
+
+**using directives:**
+make identifiers inside of scope being used as visible:
+```cpp
+using namespace std;
+
+int somevariable{};
+
+cout << "123" // can now be acessed in that scope
+cin >> somevariable 
+
+// this is unsafe as it brings all identifiers into the scope
+```
+
+**using declarations:**
+allows to use members of a namespace inside that block:
+```cpp
+{
+	using std::cout; // now cout can be used without 
+	cout << "123";
+	
+	// this is safer, as it allows to select what identifier to use in that scope.
+}
+```
+
+==Do not use using-statements in header files (especially in the global namespace of header files).==
+
+---
+
+**Anonymous namespace:**
+A namespace that provides internal linkage, and allows to avoid typing `static` keyword every time, usually used below `#include`  and above `main()`
+```cpp
+namespace
+{
+	void foo() {}; // function with internal linkage
+	int xmyb{}; // variable with internal linkage
+}
+```
+
+**Inline anonymous namespace:**
+anonymous namespace that allows multiple definitions of same name identifiers, can be used for versioning
+```cpp
+inline namespace version1_11 // older version
+{
+	int foo() {return 0;}
+}
+
+inline namespace version1_2 // current version
+{
+	int foo() {return 2;}
+}
+
+version1_2::foo(); // new version called
+```
+
+# CHAPTER 8 Control Flow
+
+|Category|Meaning|Implemented in C++ by|
+|---|---|---|
+|Conditional statements|Causes a sequence of code to execute only if some condition is met.|if, else, switch|
+|Jumps|Tells the CPU to start executing the statements at some other location.|goto, break, continue|
+|Function calls|Jump to some other location and back.|function calls, return|
+|Loops|Repeatedly execute some sequence of code zero or more times, until some condition is met.|while, do-while, for, ranged-for|
+|Halts|Terminate the program.|std::exit(), std::abort()|
+|Exceptions|A special kind of flow control structure designed for error handling.|try, throw, catch|
+
+**if statements:**
+1. if(condition1) {statement1} else {statement1}
+-  if first condition1 is true execute first statement1, otherwise execute second statement2 (single branch)
+
+2. if(condition1) {statement1} else if (condition2) {statement2}
+-  if condition1 is true execute statement1. If condition1 is false execute condition2, if condition2 is true - execute statement2. (two branches)
+
+1. if(condition1) {statement1} if(condition2) {statement2}
+-  if condition1 is true execute statement1. If condition2 is true execute condition2. (two branches)
+
+Use ==if-else== when you only want to execute the code after the first `true` condition.
+Use ==if-if== when you want to execute the code after all `true` conditions.
+
+If statements can be constexpr (c++17)
+```cpp
+constexpr double gravity(9.81);
+
+if constexpr (gravity > 9.7 && gravity < 9.9) { std::cout << "ok" }; // this if statement will be evaluated at compile time.
+```
+
+**Switch statement:**
+- if variable being evaluated is equal to case, this case's branch is executed.
+- variable must be an integral or enumerated type.
+- if there is default branch, it is always executed.
+- if there is no default, and no switch matched, switch statement is skipped.
+- `default` should be located after all `case` keywords.
+- `break` and `return` keywords can be used to end switch conditional.
+
+```cpp
+int x{5};
+std::cin >> x;
+
+switch (x)
+{
+case 0:
+	std::cout << "0";
+	break;	
+case 1:
+	std::cout << "1";
+	break;
+case 2:
+	std::cout << "2";
+	break;
+default:
+	std::cout << "default";
+}
+```
+
+**Switch fallthrough:**
+if switch cause has no `break;` terminating it, it will execute all instructions sequentially after it.
+```cpp
+int x{1};
+switch (x)
+{
+case 1:
+	cout << "1!"; // will get executed because x == 1.
+case 2:
+	cout << "2!"; // also executed
+case 3:
+	cout << "3!"; // also executed
+}
+```
+
+`[[fallthrough]]`
+```cpp
+int x{1};
+switch (x)
+{
+case 1:
+	cout << "1!"; // will get executed because x == 1.
+	[[fallthrough]]; // [[fallthrough]]; attribute ending with a null statement can be used to allow fallthrough
+case 2:
+	cout << "2!"; // also executed
+	[[fallthrough]];
+case 3:
+	cout << "3!"; // also executed
+	}
+```
+
+---
+
+**for loop**:
+equivalent to
+```cpp
+{
+	init_statement;
+	while (condition;)
+	{
+		statement;
+		end_statement;
+	}
+}
+```
+
+and structure is
+```cpp
+for (init_statement; condition; end_statement)
+```
+
+mostly sugar for while loop.
+
+multiple variables ==can== be can initalised and created in init_statement
+```cpp
+#include <iostream>
+
+int main()
+{
+    for (int x{ 0 }, y{ 9 }; x < 10; ++x, --y)
+        {
+	        std::cout << x << ' ' << y << '\n';
+	     }
+    return 0;
+}
+```
+
+facts:
+- creating a variable is very cheap
+- initalising a variable is more expensive
+- there is no difference between initalising and assigning a variable in cost.
+
+---
+
+**Prefer for-loops over while-loops when there is an obvious loop variable.  **
+Prefer while-loops over for-loops when there is no obvious loop variable.
+
+---
+
+**Break:** terminates loops like `if`, `while`, `do while`, also terminates `switch` statements
+**Continue:** ends current iteration, jumps to next iteration. for loops still execute their `end_statement`.
+```cpp
+for (int count{ 0 }; count < 10; ++count)
+{
+   // if the number is divisible by 4, skip this iteration
+   if ((count % 4) == 0)
+      continue; // go to next iteration
+
+   // If the number is not divisible by 4, keep going
+   std::cout << count << '\n';
+
+   // The continue statement jumps to here
+}
+```
+
+---
+
+**Halting programs:**
+https://www.learncpp.com/cpp-tutorial/halts-exiting-your-program-early/
+
+`std::exit` - is a function that terminates the program, defined in `cpp <cstdlib> `, it does not clean up variables so can cause bugs.
+
+

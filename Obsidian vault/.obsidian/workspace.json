@@ -55,7 +55,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "[\"tags\"]",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -76,12 +76,11 @@
               "title": "Закладки"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 251.5
+    "width": 250.5
   },
   "right": {
     "id": "f84e54619da36707",
@@ -187,13 +186,13 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "63fb7841a95d1c5e",
+  "active": "be35e5d48d456b3d",
   "lastOpenFiles": [
+    "C++ ВИВЧЕННЯ/Learning.md",
     "Drawing 2026-08-02 08.23.01.excalidraw.md",
     "Drawing 2026-08-03 18.20.28.excalidraw.md",
     "Pasted image 20260806180902.png",
     "Pasted image 20260806180924.png",
-    "C++ ВИВЧЕННЯ/Learning.md",
     "C++ ВИВЧЕННЯ/Other C++.md",
     "C++ ВИВЧЕННЯ/g++.md",
     "дурня/організована дурня/ch2.md",

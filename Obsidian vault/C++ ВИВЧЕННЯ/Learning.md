@@ -2110,4 +2110,31 @@ https://www.learncpp.com/cpp-tutorial/halts-exiting-your-program-early/
 
 `std::exit` - is a function that terminates the program, defined in `cpp <cstdlib> `, it does not clean up variables so can cause bugs.
 
+# CHAPTER 9 
 
+### **Code testing:** 
+testing code is obligatory to ensure that a function block behaves like desired by a programmer.
+
+**Statement coverage:**
+Percentage or number of statements in a code snippet that were tested.
+
+**Branch coverage:**
+percentage of branches taken in a tested code snippet
+
+**Loop coverage** 
+(informally called **the 0, 1, 2 test**) says that if you have a loop in your code, you should ensure it works properly when it iterates 0 times, 1 time, and 2 times. If it works correctly for the 2-iteration case, it should work correctly for all iterations greater than 2. These three tests therefore cover all possibilities (since a loop can’t execute a negative number of times).
+
+**Testing different categories of inputs**
+for a function `int foo(int x, int y)` test inputs are: (1, -1) ,(0,0) ( 500, 500), (INT32_MAX, INT32_MIN) etc.
+
+**Assert**
+A macro that is defined inside `<cassert>` header.
+```cpp
+assert(/*condition that evaluates to false*/ && /*error text string here*/) // if assert is true, it does not produce an error message
+```
+
+- assert is useful to set up conditions that allow to catch errors at runtime.
+- ==assert halts the program==, without ability to recover, ==that can corrupt data ==.
+- assert should be used in debug build, if preprocessor macro `NDEBUG` is defined, assert is excluded from compilation
+
+**`assert()` expressions should have no side effects, as the assert expression won’t be evaluated when `NDEBUG` is defined (and thus the side effect won’t be applied).**

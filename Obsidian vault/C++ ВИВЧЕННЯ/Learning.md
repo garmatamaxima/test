@@ -2138,3 +2138,121 @@ assert(/*condition that evaluates to false*/ && /*error text string here*/) // i
 - assert should be used in debug build, if preprocessor macro `NDEBUG` is defined, assert is excluded from compilation
 
 **`assert()` expressions should have no side effects, as the assert expression won’t be evaluated when `NDEBUG` is defined (and thus the side effect won’t be applied).**
+
+# CHAPTER 10
+
+|Category|Meaning|Link|
+|---|---|---|
+|Numeric promotions|Conversions of small integral types to `int` or `unsigned int`, and of `float` to `double`.|[10.2 -- Floating-point and integral promotion](https://www.learncpp.com/cpp-tutorial/floating-point-and-integral-promotion/)|
+|Numeric conversions|Other integral and floating point conversions that aren’t promotions.|[10.3 -- Numeric conversions](https://www.learncpp.com/cpp-tutorial/numeric-conversions/)|
+|Qualification conversions|Conversions that add or remove `const` or `volatile`.||
+|Value transformations|Conversions that change the value category of an expression|[12.2 -- Value categories (lvalues and rvalues)](https://www.learncpp.com/cpp-tutorial/value-categories-lvalues-and-rvalues/)|
+|Pointer conversions|Conversions from `std::nullptr` to pointer types, or pointer types to other pointer types||
+
+|Category|Standard Conversion|Description|Also See|
+|---|---|---|---|
+|Value transformation|Lvalue-to-rvalue|Converts lvalue expression to rvalue expression|[12.2 -- Value categories (lvalues and rvalues)](https://www.learncpp.com/cpp-tutorial/value-categories-lvalues-and-rvalues/)|
+|Value transformation|Array-to-pointer|Converts C-style array to pointer to first array element (a.k.a. array decay)|[17.8 -- C-style array decay](https://www.learncpp.com/cpp-tutorial/c-style-array-decay/)|
+|Value transformation|Function-to-pointer|Converts function to function pointer|[20.1 -- Function Pointers](https://www.learncpp.com/cpp-tutorial/function-pointers/)|
+|Value transformation|Temporary materialization|Converts value to temporary object||
+|Qualification conversion|Qualification conversion|Adds or removes `const` or `volatile` from types||
+|Numeric promotions|Integral promotions|Converts smaller integral types to `int` or `unsigned int`|[10.2 -- Floating-point and integral promotion](https://www.learncpp.com/cpp-tutorial/floating-point-and-integral-promotion/)|
+|Numeric promotions|Floating point promotions|Converts `float` to `double`|[10.2 -- Floating-point and integral promotion](https://www.learncpp.com/cpp-tutorial/floating-point-and-integral-promotion/)|
+|Numeric conversions|Integral conversions|Integral conversions that aren’t integral promotions|[10.3 -- Numeric conversions](https://www.learncpp.com/cpp-tutorial/numeric-conversions/)|
+|Numeric conversions|Floating point conversions|Floating point conversions that aren’t floating point promotions|[10.3 -- Numeric conversions](https://www.learncpp.com/cpp-tutorial/numeric-conversions/)|
+|Numeric conversions|Integral-floating conversions|Converts integral and floating point types|[10.3 -- Numeric conversions](https://www.learncpp.com/cpp-tutorial/numeric-conversions/)|
+|Numeric conversions|Boolean conversions|Converts integral, unscoped enumeration, pointer, or pointer-to-memver to bool|[4.10 -- Introduction to if statements](https://www.learncpp.com/cpp-tutorial/introduction-to-if-statements/)|
+|Pointer conversions|Pointer conversions|Converts `std::nullptr` to pointer, or pointer to void pointer or base class||
+|Pointer conversions|Pointer-to-member conversions|Converts `std::nullptr` to pointer-to-member  <br>or pointer-to-member of base class to pointer-to-member of derived class||
+|Pointer conversions|Function pointer conversions|Converts pointer-to-noexcept-function to pointer-to-function||
+
+---
+
+**type promotion**
+Compiler automatically converts smaller sized type like `short` to fit CPU and RAM architecturally. 
+`short` 16bit -> `int` 32 bit 
+`char`  8bit-> `int` 32 bit
+
+This conversion ==is== value preserving and can be converted back (if value werent changed to overflow initial smaller size)
+
+**Reinterpretive conversions**
+unsafe numeric conversions where the converted value may be different than the source value, but no data is lost.
+```cpp
+ int n1 { 5 };
+ unsigned int u1 { n1 }; // okay: will be converted to unsigned int 5 (value preserved)
+
+ int n2 { -5 };
+ unsigned int u2 { n2 }; // bad: will result in large integer outside range of signed int
+
+```
+
+==out-of-range conversion will produce modulo wrapping==
+
+**Lossy conversions**
+unsafe numeric conversions where data may be lost during the conversion.
+
+`double x = 3` - okay, int to double conversion is value preserving
+`int y = 3.5` - lossy conversion from double to integer, fractional part is truncated.
+
+converting short and char to double is safe as short is 8 bits and char is 16 bits, while double is 64 bits. All values can be preserved. But ==converting long long to double will result in lossy conversion==
+
+---
+
+**In C++, a **narrowing conversion is a potentially unsafe numeric conversion where the destination type may not be able to hold all the values of the source type.**
+
+- From a floating point type to an integral type.
+- From a floating point type to a narrower or lesser ranked floating point type, unless the value being converted is constexpr and is in range of the destination type (even if the destination type doesn’t have the precision to store all the significant digits of the number).
+- From an integral to a floating point type, unless the value being converted is constexpr and whose value can be stored exactly in the destination type.
+- From an integral type to another integral type that cannot represent all values of the original type, unless the value being converted is constexpr and whose value can be stored exactly in the destination type. This covers both wider to narrower integral conversions, as well as integral sign conversions (signed to unsigned, or vice-versa).
+
+---
+
+**Arithmetic type conversions**
+for expressions that contain different types to evaluate, compiler uses implicit arithmetic conversions. 
+
+operators: arithmetic `+` `-` `*` `/` `%`, logic `> < <= >= == !=`, bitwise `& ^ |` - Require operand types to be the same
+
+compiler ==converts operands of different types to== **common type** using a hierarchy from int to long double.
+
+int -> long -> long long -> float -> double -> long double (highest rank)
+
+```cpp
+#include <type_traits> // adds std::common_type
+
+std::cout << std::common_type_t<int,double> // returns common type of int and double 
+```
+
+```cpp
+#include <typeinfo> // adds typeid class
+
+std::cout << typeid(5u - 10).name << '\n'; // typeid.name returns "unsigned int 4294967291"
+```
+
+---
+
+**Type deduction**
+`auto` keyword can be used for a compiler to automatically select type of a variable
+```cpp
+auto x{ 5.5 + 25 * std::pow(4,4) }; //  x will evaluate to double type.
+```
+
+- type deduction ==drops== `const` from deduced types.
+```cpp
+const int a{5};
+auto b{a}; // will be non const.
+```
+
+type deduction can be used with function return values.
+
+**Trailing return type syntax** 
+allows alternative way to display return type of a function (looks better)
+```cpp
+auto compare(int, double) -> std::common_type_t<int, double>; // easier to read 
+{
+// code here.
+}
+```
+
+# CHAPTER 11
+
+

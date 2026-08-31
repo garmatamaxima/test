@@ -10,8 +10,11 @@
 #include <algorithm>
 #include <chrono>
 #include <thread>
+#include <vector>
 
 using namespace constant;
+using namespace RustTypedefs; 
+
 
 struct vector3
 {
@@ -90,16 +93,15 @@ namespace vec
     }
 
     /// In progress angle setting 
-    physicalObject& setYaw( const physicalObject& mut_a, float angle)
-    {
-         
-        
+    //physicalObject& setYaw( const physicalObject& mut_a, float angle)
+    //{
+    //     
+    //    
 
-    }
+    //}
 
 
 }
-
 
 void simulate(  physicalObject& object, double delta_time )
 {
@@ -125,6 +127,12 @@ void pretty_print_state(physicalObject& object)
 
 int main()
 {
+
+    int z{5};
+    int x{5};
+    double g{5.5};
+    z = static_cast<int>(g + z);
+
     physicalObject ball{};
     physicalObject joe{};
 
@@ -137,22 +145,20 @@ int main()
     joe.x = 2;
     joe.y = 2;
 
-    vector3 difference = {};
+    //while (true)
+    //{ 
 
-    while (true)
-    { 
+    //physicalObject normball = vec::normalise(ball);
+    //physicalObject normjoe = vec::normalise(joe);
 
-    physicalObject normball = vec::normalise(ball);
-    physicalObject normjoe = vec::normalise(joe);
+    //double check = std::atan2(normball.y, normball.x);
 
-    double check = std::atan2(normball.y, normball.x);
+    //vec::dotproduct( normball, normjoe );
 
-    vec::dotproduct( normball, normjoe );
+    //difference.x = ball.x - joe.x;
+    //difference.y = ball.y - joe.y;
 
-    difference.x = ball.x - joe.x;
-    difference.y = ball.y - joe.y;
-
-    }
+    //}
 
     double d_tick{0.0};
     double tick{0.0};   // in seconds

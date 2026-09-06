@@ -15,7 +15,6 @@
 using namespace constant;
 using namespace RustTypedefs; 
 
-
 struct vector3
 {
     double x;

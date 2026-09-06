@@ -2256,3 +2256,102 @@ auto compare(int, double) -> std::common_type_t<int, double>; // easier to read
 # CHAPTER 11
 
 
+# CHAPTER 12 
+
+**C++ supports these compound types:**
+- Functions
+- C-style Arrays
+**Pointer types**:
+| Pointer to object
+| Pointer to function
+**Pointer to member types**:
+| Pointer to data member
+| Pointer to member function
+**Reference types**:
+| L-value references
+| R-value references
+**Enumerated types**:
+| Unscoped enumerations
+| Scoped enumerations
+**Class types**:
+| Structs
+| Classes
+| Unions
+
+---
+### **lvalue**
+a value that can be identified using ==identifier, reference, or pointer,== and its storage duration is longer than one expression or statement.
+| **modifiable lvalue** - `int myx{};`
+| **non modifiable lvalue** - `const int myx{};` or `constexpr int myx{};`
+
+### rvalue
+a value that is **temporary**. Rvalues aren’t identifiable (meaning they have to be used immediately), and only exist within the scope of the expression in which they are used.
+
+An lvalue will implicitly convert to an rvalue. This means an lvalue can be used anywhere an rvalue is expected.  
+An rvalue, on the other hand, will not implicitly convert to an lvalue.
+```cpp
+x = 5; // rvalue to lvalue conversion, literal 5 is rvalue, operator= automatically converts.
+```
+
+---
+## **referencing**
+a reference is alias for existing object `int& ` - lvalue reference and `int&&` - rvalue reference,  reference is just different identifier for same data.
+
+#### **variable being referenced and reference variable can have different lifetime.** / **Dangling references**
+When an object being referenced is destroyed before a reference to it, the reference is left referencing an object that no longer exists. Such a reference is called a **dangling reference**.==Accessing a dangling reference leads to undefined behavior==.
+
+| A reference can be destroyed before the object it is referencing.
+|The object being referenced can be destroyed before the reference.
+
+**const lvalue references**
+lvalue reference can bind to modifiable lvalues, using const keywoard in reference definition prevents modifying the reffered to object, making the reference an read-only.
+```cpp
+int x{100};
+const x_ref{ x }; // read only.
+
+std::cout << x_ref << '\n'; // prints 100
+x = 150;
+std::cout << x_ref << '\n'; // prints 150
+x_ref = 150; // no.
+
+```
+
+**lvalue reference cant bind to a value of different type** / *lvalue reference cant bind to rvalues.*
+```cpp
+int x{1};
+double& invalidRef{ x }; // x is int type, compiler can try to convert it to double but converted values are rvalue.
+								 // lvalue reference can only bind to a modifiable lvalue.
+								 
+const double& yes{ x }   // x is converted to double and becomes rvalue, it is an const lvalue reference, can bind
+								 // to rvalues for read only purposes.
+
+double y{2.0};
+double& ok{y} // ok.
+```
+
+**rvalue reference is created using `&&` symbol.**
+```cpp
+template <typename T>
+bool isrvalue( T&& ) { return true; } // this is overloaded function that refers to rvalues
+
+template <typename T>
+bool isrvalue( T& ) { return false; } // this is overloaded function that refers to lvalues
+
+int main()
+{
+    double x{0.5};
+    std::cout << "variable x is " << (isrvalue(x) ? "rvalue" : "lvalue") << '\n';
+    std::cout << "literal 5 is " << (isrvalue(5) ? "rvalue" : "lvalue") << '\n';
+}
+```
+outputs:
+```
+variable x is lvalue
+literal 5 is rvalue
+```
+
+when function is overloaded, compiler chooses the function that fits the type of parameter (or converts types), ==template metaprogramming== generates a function that can support both int and double type, but rvalue and lvalue are different and will be routed to their respective alias types.
+
+**nomenclature**
+	A type that specifies a reference (e.g. `int&`) is called a **reference type**. The type that can be referenced (e.g. `int`) is called the **referenced type**.
+	The process by which such a reference is bound (attached to object) is called **reference binding**. The object (or function) being referenced is sometimes called the **referent**.

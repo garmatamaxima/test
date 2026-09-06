@@ -18,6 +18,8 @@ body {
     --code-string: #a5d6ff;
     --code-tag: #7ee787;
     --code-value: #79C0FF;
+	--text-highlight-bg: #3A4752;
+	
 }
 
 .markdown-preview-view .token.hexcode.color {

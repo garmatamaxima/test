@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cassert>
+#include <type_traits>
 
 #define DEV
 
@@ -171,13 +172,22 @@ void calculator()
     // double division precision for x = 1 and y = 0.00000000000000000001 is around 21 digits for y!
 }
 
+
+double get( double matrix[9], int i, int j,  int rowsize)
+{
+    int acess{ (j + (i - 1) * rowsize) -1 };
+    return matrix[ acess ];
+}
+
+template <typename T>
+bool isrvalue(T&&) { return true; } // this is overloaded function that refers to rvalues
+
+template <typename T>
+bool isrvalue(T&) { return false; } // this is overloaded function that refers to lvalues
+
 int main()
 {
-    bool main_loop{true};
-
-    while (main_loop)
-    {
-
-    }
-    
+    int x{};
+    std::cout << "variable x is " << (isrvalue(x) ? "rvalue" : "lvalue") << '\n';
+    std::cout << "literal 5 is " << (isrvalue(5) ? "rvalue" : "lvalue") << '\n';
 }

@@ -2255,7 +2255,7 @@ auto compare(int, double) -> std::common_type_t<int, double>; // easier to read
 
 # CHAPTER 11
 
-
+...
 # CHAPTER 12 
 
 **C++ supports these compound types:**
@@ -2279,7 +2279,7 @@ auto compare(int, double) -> std::common_type_t<int, double>; // easier to read
 | Unions
 
 ---
-### **lvalue**
+### **lvalue** #lvalue
 a value that can be identified using ==identifier, reference, or pointer,== and its storage duration is longer than one expression or statement.
 | **modifiable lvalue** - `int myx{};`
 | **non modifiable lvalue** - `const int myx{};` or `constexpr int myx{};`
@@ -2294,7 +2294,7 @@ x = 5; // rvalue to lvalue conversion, literal 5 is rvalue, operator= automatica
 ```
 
 ---
-## **referencing**
+## **referencing** #reference #alias
 a reference is alias for existing object `int& ` - lvalue reference and `int&&` - rvalue reference,  reference is just different identifier for same data.
 
 #### **variable being referenced and reference variable can have different lifetime.** / **Dangling references**
@@ -2355,3 +2355,195 @@ when function is overloaded, compiler chooses the function that fits the type of
 **nomenclature**
 	A type that specifies a reference (e.g. `int&`) is called a **reference type**. The type that can be referenced (e.g. `int`) is called the **referenced type**.
 	The process by which such a reference is bound (attached to object) is called **reference binding**. The object (or function) being referenced is sometimes called the **referent**.
+
+---
+
+Pointer and reference combinatorics. `Type of int uses for all examples
+
+| Value              | pointer                                           | explanation                                                                                                                      |
+| ------------------ | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| int x{}            | int* ptr{ &x }                                    | pointer to lvalue, ok                                                                                                            |
+| int x{}            | int* const ptr{ &x }                              | const pointer to non const lvalue, const pointer's adress cant be changed.                                                       |
+| int x{}            | const int* ptr{ &x }                              | pointer to const lvalue at adress of x, where x is treated as const if dereferenced using pointer's identifier                   |
+| int x{}            | const int* const ptr{ &x }                        | const pointer to non const lvalue that is treated as const if dereferenced using a pointer's identifier                          |
+| const int x{}      | int* ptr{ &x }                                    | pointer to non const cant point to const lvalue: COMPILATION ERROR                                                               |
+| const int x{}      | int* const ptr{ &x }                              | const pointer to const lvalue without using const keyword behind the type: COMPILATION ERROR                                     |
+| const int x{}    . | const int* prt{ &x }                .             | pointer to const lvalue at adress of x                                                                                           |
+| const int x{}      | const int* const ptr{ &x }                        | const pointer to const lvalue at adress of x                                                                                     |
+| .                  | int* ptr{ } or int* ptr{nullptr}                . | pointer that holds nullpointer (value with no adress), implicitly converts to false bool allowing to check if pointer is nullptr |
+
+| Value                        | reference                           | explanation                                                                                                                                                                     |
+| ---------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| int x{}        .             | int& ref{x}                         | reference to x, x can be read and written through ref                                                                                                                           |
+| int x{}                      | const int& ref{x}                 . | const reference to x, can read value of x only, changing x through ref is disallowed. const reference can bind to: const lvalues, lvalues, rvalues (creating temporary objects) |
+| const int x{}              . | int& ref{x}                         | cant bind modifiable reference to const lvalue: COMPILATION ERROR                                                                                                               |
+| const int x{}                | const int& ref{x}                   | okay, can bind const reference to const lvalue.                                                                                                                                 |
+| 5                            | const  int& ref{x}                  | can bind to rvalues creating temporary values, WARNING: compiler can do implicit conversions, which is not desired.                                                             |
+
+---
+
+**NULLPOINTER** #nullptr #nullptr_t
+`int* ptr{ } or int* ptr{ nullptr }`
+pointer that holds nullpointer (value with no adress), implicitly converts to false bool allowing to check if pointer is invalid.
+
+`nullptr_t` is a type that can hold one value - nullpointer.
+
+checking for nullpointer
+```cpp
+
+if (ptr) // any valid pointer adress converts to boolean true
+{
+	*prt += 1; // ok
+}
+else
+{
+	// evaluated to false, so pointer holds nullptr, should not be dereferenced.
+}
+
+```
+
+even better alternative
+```cpp
+template <typename T>
+void checkpointer(T* ptr)
+{
+	assert(ptr && "nullpointer passed" );
+}
+```
+
+**PASSING BY ADRESS**
+possible in two ways
+```cpp
+void modifyYourID( const int* id ) { *id += 1; }
+
+int user{ 10 };
+
+modifyYourID( &user ); // passing adress of user to const pointer.
+
+```
+
+```cpp
+void modifyYourID( const int* id ) { *id += 1; }
+
+int user{ 10 };
+int* user_ptr{ user };
+
+modifyYourID( user_ptr ); // passing pointer that already holds adress of user.
+
+```
+
+**PASSING BY ADRESS DOES NOT CHANGE ARGUMENT**
+when passing adresses to functions that have pointer parameters, changing pointer inside of function changes what function's pointer points to, not what argument pointer does
+```cpp
+#include <iostream>
+
+void nullify( int* ptr2)
+{
+    ptr2 = nullptr; // Make the function parameter a null pointer
+}
+
+int main()
+{
+    int x{ 5 };
+    int* ptr{ &x }; // ptr points to x
+
+    nullify(ptr); // ptr wont be nullified, only ptr2 will, but ptr2 is a pointer inside of function.
+    return 0;
+}
+```
+
+**PASSING BY REFERENCE TO POINTER**
+yep
+```cpp
+#include <iostream>
+
+void nullify( int*& ptr2) // reference to pointer type variable
+{
+    ptr2 = nullptr; // Make the function parameter a null pointer
+}
+
+int main()
+{
+    int x{ 5 };
+    int* ptr{ &x }; // ptr points to x
+
+	 nullify(ptr) // function has reference to ptr, any changes applied to ptr2 are done to ptr. Will be nullptr.
+	 return 0;
+}
+```
+
+---
+
+**RETURNING BY REFERENCE / POINTER**
+==Important note== - **References or pointers returned by functions are temporary values (rvalues)!**
+
+```cpp
+#include <iostream>
+
+int* fooPtr(int* adress) // accepts adress as argument and stores it in pointer variable, returns that same pointer type variable
+{
+	*adress *= 10;
+	return adress;
+}
+
+int& fooRef(int& adress) // binds reference to variable argument, then returns that same reference.
+{
+	adress *= 10;
+	return adress;
+}
+
+int main()
+{
+	int x{2};
+	int y{3};
+
+	std::cout << fooRef( x ) << '\n'; // return value is reference to x.
+	std::cout << *fooPtr( &y ) << '\n'; // return value is pointer to x, which is dereferenced to read value of x.
+
+	std::cout << '\n' << x << '\n'; // x was modified by fooRef
+	std::cout << y << '\n'; // y was modified by fooPtr
+	return 0;
+}
+```
+
+**The object being returned by reference must be valid after function returns** - local variables created inside functions or temporary values will be destroyed after function terminates, that would leave pointers or references **dangling** and pointing to garbage bytes ( undefined behaviour ).
+
+**Lifetime extension doesn’t work across function boundaries** - returning a reference (const or modifiable) to temporary value leads to **UB**, as temporary values are destroyed after function scope ends.
+
+**Rvalues passed via const reference can be returned back via const reference**
+```cpp
+const std::string& pass(const std::string& string)
+{
+	return string;
+}
+// this function uses const reference as argument to then return same const reference.
+```
+
+Return value is rvalue.
+
+**If function returns non const reference, the caller can modify value of an argument.**
+```cpp
+#include <iostream>
+
+// takes two integers by non-const reference, and returns the greater by reference
+int& max(int& x, int& y)
+{
+    return (x > y) ? x : y;
+}
+
+int main()
+{
+    int a{ 5 };
+    int b{ 6 };
+
+    max(a, b) = 7; // sets the greater of a or b to 7
+    // function were passed variables max(a,b), b is > than a, so function returned reference to b, then b was assigned to 7. 
+
+    std::cout << a << b << '\n'; // returns 57
+
+    return 0;
+}
+```
+
+**return by adress**
+the object being returned by address must outlive the scope of the function returning the address, otherwise the caller will receive a dangling pointer. ==Pointer can return a== `nullptr`, that can be used to signify that object does not exist.
